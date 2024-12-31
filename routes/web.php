@@ -37,6 +37,12 @@ $router->delete('/diagnosis/delete/{id}', 'DiagnosisController@destroy');
 
 $router->get('/rujukan', 'RujukanController@index');
 $router->post('/rujukan/store', 'RujukanController@store');
-$router->get('/rujukan/rekmed/{no_rekam_medis}', 'RujukanController@rekmed');
+$router->get('/rujukan/rekmed/{no_rekam_medis}', 'RujukanController@show');
 $router->put('/rujukan/update/{id}', 'RujukanController@update');
 $router->delete('/rujukan/delete/{id}', 'RujukanController@destroy');
+
+$router->get('/rekam', 'RekamController@index');
+$router->post('/rekam/store', 'RekamController@store');
+$router->get('/rekam/rekmed/{no_rekam_medis}', 'RekamController@show');
+$router->put('/rekam/update/{id}', 'RekamController@update');
+$router->delete('/rekam/delete/{id}', 'RekamController@destroy');
