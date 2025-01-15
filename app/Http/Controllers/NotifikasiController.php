@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Jadwal;
+use Carbon\Carbon;
+
+class NotifikasiController extends Controller
+{
+    //fungsi untuk menampilkan data profil seluruh pasien
+    public function notifikasi(){
+
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->addDays(3)->endOfDay();
+
+        // Query database
+        $notifikasi = Jadwal::whereBetween('tanggal', [$startDate, $endDate])->get();
+
+        if ($notifikasi->isNotEmpty()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Notifikasi anda berhasil!',
+                'data1' => $notifikasi,
+                'data2' => $endDate
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Notifikasi anda gagal!',
+                'data' => $endDate,
+            ], 400);
+        }
+    }
+}

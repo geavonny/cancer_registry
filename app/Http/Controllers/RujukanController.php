@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RujukanController extends Controller
 {
+    //fungsi untuk menampilkan data rujukan seluruh pasien
     public function index()
     {
         $rujukan = Rujukan::all();
@@ -20,6 +21,7 @@ class RujukanController extends Controller
         ], 200);
     }
 
+    //fungsi untuk menambahkan data rujukan pasien
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -59,64 +61,28 @@ class RujukanController extends Controller
         }
     }
 
+    //fungsi untuk mencari data rujukan pasien berdasarkan no rekam medis dan id
     public function show($no_rekam_medis = null)
     {
-        $rujukan = Rujukan::where('no_rekam_medis',$no_rekam_medis)->get();
+        $rujukan = Rujukan::where('no_rekam_medis',$no_rekam_medis)
+                            ->orWhere('id',$no_rekam_medis)
+                            ->get();
         
         if($rujukan->isEmpty()){
             return response()->json([
                 'success'=> false,
-                'message'=> 'Nomor Rekam Medis pasien tidak ditemukan'
+                'message'=> 'Rujukan pasien tidak ditemukan'
             ], 404);
         }else{
             return response()->json([
                 'success' => true,
-                'message' =>'Rujukan pasien berdasarkan No Rekam Medis',
+                'message' =>'Rujukan pasien',
                 'data'    => $rujukan
             ], 200);
         }       
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'no_rekam_medis'   => 'nullable',
-    //         'ppk' => 'nullable',
-    //         'tgl_ppk'   => 'required',
-    //     ]);
-
-    //     if ($validator->fails()) {
-
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Semua Kolom Wajib Diisi!',
-    //             'data'   => $validator->errors()
-    //         ],401);
-
-    //     } else {
-
-    //         $rujukan = Rujukan::whereId($id)->update([
-    //             'no_rekam_medis'   => $request->input('no_rekam_medis'),
-    //             'ppk' => $request->input('ppk'),
-    //             'tgl_ppk'   => $request->input('tgl_ppk'),
-    //         ]);
-
-    //         if ($rujukan) {
-    //             return response()->json([
-    //                 'success' => true,
-    //                 'message' => 'Rujukan Berhasil Diupdate!',
-    //                 'data' => $rujukan
-    //             ], 201);
-    //         } else {
-    //             return response()->json([
-    //                 'success' => false,
-    //                 'message' => 'Rujukan Gagal Diupdate!',
-    //             ], 400);
-    //         }
-
-    //     }
-    // }
-
+    //fungsi untuk update data rujukan pasien berdasarkan id pasien
     public function update(Request $request, $id)
     {
         // Validasi input
@@ -167,9 +133,10 @@ class RujukanController extends Controller
         }
     }
 
-    public function destroy($id)
+    //fungsi untuk menghapus data rujukan pasien berdasarkan no rekam medis pasien
+    public function destroy($no_rekam_medis)
     {
-        $rujukan = Rujukan::whereId($id)->first();
+        $rujukan = Rujukan::where($no_rekam_medis)->first();
             $rujukan->delete();
 
         if ($rujukan) {
