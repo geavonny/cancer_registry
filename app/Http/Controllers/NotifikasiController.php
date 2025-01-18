@@ -21,13 +21,11 @@ class NotifikasiController extends Controller
                 'success' => true,
                 'message' => 'Notifikasi anda berhasil!',
                 'data1' => $notifikasi,
-                'data2' => $endDate
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Notifikasi anda gagal!',
-                'data' => $endDate,
+                'message' => 'Jadwal tidak ditemukan',
             ], 400);
         }
     }

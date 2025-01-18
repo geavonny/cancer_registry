@@ -89,3 +89,7 @@ $router->delete('/jadwal/delete/{no_rekam_medis}', 'JadwalController@destroy');/
 
 //ENDPOINT NOTIFIKASI CHECKUP
 $router->get('/notifikasi', 'NotifikasiController@notifikasi'); //menampilkan reminder checkup pasien
+
+//ENDPOINT LOGIN
+$router->post('/login', 'loginController@ceklogin');
+$router->post('/logout', 'loginController@logout');  
