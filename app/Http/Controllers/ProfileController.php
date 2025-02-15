@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
+    //fungsi untuk membutuhkan token untuk akses API
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+    
     //fungsi untuk menampilkan data profil seluruh pasien
     public function index()
     {
@@ -104,7 +110,7 @@ class ProfileController extends Controller
     {
         $profile = Profile::where('no_rekam_medis',$no_rekam_medis)
                             ->orWhere('no_registrasi',$no_rekam_medis)
-                            ->orWhere('id',$no_rekam_medis)
+                            ->orWhereRaw('LOWER(nama_lengkap) LIKE ?', [strtolower('%'.$no_rekam_medis.'%')])
                             ->get();
         // $profile = $no_registrasi;
        

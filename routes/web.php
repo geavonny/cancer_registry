@@ -91,5 +91,8 @@ $router->delete('/jadwal/delete/{no_rekam_medis}', 'JadwalController@destroy');/
 $router->get('/notifikasi', 'NotifikasiController@notifikasi'); //menampilkan reminder checkup pasien
 
 //ENDPOINT LOGIN
-$router->post('/login', 'loginController@ceklogin');
-$router->post('/logout', 'loginController@logout');  
+$router->post('/login', 'loginController@ceklogin'); //membuat token untuk user login dengan menggunakan username dan password
+$router->post('/logout', 'loginController@logout'); //untuk logout user dari sistem 
+
+//IMPORT FILE EXCEL
+$router->post('/import', 'ImportsTest@import'); //untuk import file excel ke table database

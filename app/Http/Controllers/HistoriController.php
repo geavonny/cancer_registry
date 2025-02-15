@@ -87,7 +87,8 @@ class HistoriController extends Controller
     public function show($no_rekam_medis = null)
     {
         $histori = Histori::where('no_rekam_medis',$no_rekam_medis)
-                            ->orWhere('id',$no_rekam_medis)
+                            ->orWhere('no_registrasi',$no_rekam_medis)
+                            ->orWhere('nama_lengkap',$no_rekam_medis)
                             ->get();
         // $histori = $no_rekam_medis;
        

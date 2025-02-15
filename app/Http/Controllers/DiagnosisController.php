@@ -78,7 +78,8 @@ class DiagnosisController extends Controller
     public function show($no_rekam_medis = null) 
     {
         $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)
-                                ->orWhere('id',$no_rekam_medis)
+                                ->orWhere('no_registrasi',$no_rekam_medis)
+                                ->orWhere('nama_lengkap',$no_rekam_medis)
                                 ->get();
         if($diagnosis->isEmpty()){
             return response()->json([

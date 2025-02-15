@@ -120,7 +120,8 @@ class RekamController extends Controller
     public function show($no_rekam_medis = null)
     {
         $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)
-                            ->orWhere('id',$no_rekam_medis)
+                            ->orWhere('no_registrasi',$no_rekam_medis)
+                            ->orWhere('nama_lengkap',$no_rekam_medis)
                             ->get();
         // $rekam = $pemeriksaan_fisik_lainnya;
        

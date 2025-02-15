@@ -19,7 +19,7 @@ class LoginController extends Controller
     public function ceklogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required',
+            'email' => 'required',
             'password' => 'required',
         ]);
 
@@ -33,23 +33,42 @@ class LoginController extends Controller
 
         } else {
 
-            $pengguna = Pengguna::where('username',$request->input('username'))->first();
+            $pengguna = Pengguna::where('email',$request->input('email'))->first();
             // dd(Hash::check($request->input('password'),$pengguna->password));
             // dd($pengguna);
             if($pengguna && Hash::check($request->input('password'),$pengguna->password)){
                 // $token = $pengguna->createToken('cancer_registry')->plainTextToken();
+                $existingToken = Token::where('user_id',$pengguna->id)->first();
+
+                if($existingToken){
+                    if(Carbon::now()->greaterThan($existingToken->expired_at)){
+                        $existingToken->delete();
+                    } else {
+                        return response()->json([
+                            'message'=> 'Token masih berlaku, Login sukses!',
+                            'user_id'=> $pengguna->id,
+                            'role'=> $pengguna->level,
+                            'token'=> $existingToken,
+                        ]);
+                    }
+                }                
+                
                 $token = Str::random(64);
-                $expired_at = Carbon::now()->addHours(1);
+                $expired_at = Carbon::now()->addHours(24);
                 Token::create(
-                    ['user_id'=>$pengguna->id,
+                    [
+                    'user_id'=>$pengguna->id,
                     'token'=>$token,
-                    'expires_at'=>$expired_at,
+                    'expired_at'=>$expired_at,
                     ]                    
                 );
                 return response()->json([
                     'message'=> 'Login sukses',
+                    'user_id'=> $pengguna->id,
+                    'role'=> $pengguna->level,
                     'token'=> $token,
-                    'expired_at'=>$expired_at,
+                    // 'expired_at'=>$expired_at,
+                    'expired_at' => Carbon::parse($expired_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 ]);
             } else{
                 return response()->json([
