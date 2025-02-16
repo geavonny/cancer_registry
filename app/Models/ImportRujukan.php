@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Imports extends Model
+class ImportRujukan extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'import_test';
+    protected $table = 'rujukan';
     public $timestamps = false;
     /**
      * @var array
      */
     protected $fillable = [
-        'nama','nik','status',
-    ];
+            'nama_lengkap','no_registrasi','no_rekam_medis','ppk','tgl_ppk'
+        ];
 }

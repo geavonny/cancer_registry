@@ -95,4 +95,8 @@ $router->post('/login', 'loginController@ceklogin'); //membuat token untuk user 
 $router->post('/logout', 'loginController@logout'); //untuk logout user dari sistem 
 
 //IMPORT FILE EXCEL
-$router->post('/import', 'ImportsTest@import'); //untuk import file excel ke table database
+$router->post('/import/diagnosis', 'ImportsController@diagnosis'); //untuk import file excel ke table database diagnosis
+$router->post('/import/profile', 'ImportsController@profile'); //untuk import file excel ke table database profile
+$router->post('/import/histori', 'ImportsController@histori'); //untuk import file excel ke table database histori
+$router->post('/import/rujukan', 'ImportsController@rujukan'); //untuk import file excel ke table database rujukan
+$router->post('/import/rekmed', 'ImportsController@rekmed'); //untuk import file excel ke table database rekmed
