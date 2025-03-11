@@ -33,7 +33,7 @@ class ImportsController extends Controller
             $file = $request->file('file');
             
             // Import the file directly
-            Excel::diagnosis(new DiagnosisImport, $file);
+            Excel::import(new DiagnosisImport, $file);
 
             // Return a success message
             return response()->json(['message' => 'Imported Successfully!'], 200);
@@ -62,7 +62,7 @@ class ImportsController extends Controller
             $file = $request->file('file');
             
             // Import the file directly
-            Excel::profile(new ProfileImport, $file);
+            Excel::import(new ProfileImport, $file);
 
             // Return a success message
             return response()->json(['message' => 'Imported Successfully!'], 200);
@@ -91,7 +91,7 @@ class ImportsController extends Controller
             $file = $request->file('file');
             
             // Import the file directly
-            Excel::histori(new HistoriImport, $file);
+            Excel::import(new HistoriImport, $file);
 
             // Return a success message
             return response()->json(['message' => 'Imported Successfully!'], 200);
@@ -120,7 +120,7 @@ class ImportsController extends Controller
             $file = $request->file('file');
             
             // Import the file directly
-            Excel::rujukan(new RujukanImport, $file);
+            Excel::import(new RujukanImport, $file);
 
             // Return a success message
             return response()->json(['message' => 'Imported Successfully!'], 200);
@@ -149,7 +149,7 @@ class ImportsController extends Controller
             $file = $request->file('file');
             
             // Import the file directly
-            Excel::rekmed(new RekmedImport, $file);
+            Excel::import(new RekmedImport, $file);
 
             // Return a success message
             return response()->json(['message' => 'Imported Successfully!'], 200);

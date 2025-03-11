@@ -3,10 +3,11 @@
 namespace App\Imports;
 
 use App\Models\ImportHistori;
-use Illuminate\Support\Facades\Hash;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class HistoriImport implements ToModel
+class HistoriImport implements ToModel, WithHeadingRow
 {
     /**
      * @param array $row
@@ -15,32 +16,44 @@ class HistoriImport implements ToModel
      */
     public function model(array $row)
     {
+        // dd($row);
+        
         // Check if a record with the same 'nik' already exists
-        $existingRecord = ImportHistori::where('nama_lengkap', $row[0])->first();
+        $existingRecord = ImportHistori::where('no_registrasi', $row['no_registrasi'])->first();
 
         // If the record already exists, return null to skip it
         if ($existingRecord) {
             return null;
         }
+        
+        // Convert the Excel date (numeric) to a MySQL-compatible date format
+        // $tglkeluhan = Date::excelToDateTimeObject($row['tgl_keluhan_pertama']);
+        // $formattglkeluhan = $tglkeluhan->format('Y-m-d');
+        
+        // $tgldiagnosis = Date::excelToDateTimeObject($row['tgl_diagnosis']);
+        // $formattgldiagnosis = $tgldiagnosis->format('Y-m-d');
+        
+        // $tglterapi = Date::excelToDateTimeObject($row['tgl_pertama_terapi']);
+        // $formattglterapi = $tglterapi->format('Y-m-d');
 
         // If the record doesn't exist, create a new record
         return new ImportHistori([
-           'nama_lengkap'   => $row[0],
-           'no_registrasi'    => $row[1], 
-           'no_rekam_medis' => $row[2],
-           'dasar_diagnosis' => $row[3],
-           'bb_lahir' => $row[4],
-           'imunisasi' => $row[5],
-           'asi_eksklusif' => $row[6],
-           'riwayat_keganasan_keluarga' => $row[7],
-           'ket_keganasan_keluarga' => $row[8],
-           'tata_laksana' => $row[9],
-           'staging_stadium' => $row[10],
-           'tgl_keluhan_pertama' => $row[11],
-           'tgl_diagnosis' => $row[12],
-           'tgl_pertama_terapi' => $row[13],
-           'status_validasi' => $row[14],
-           'nama_unit' => $row[15],
+           'nama_lengkap'   => $row['nama_lengkap'],
+           'no_registrasi'    => $row['no_registrasi'], 
+           'no_rekam_medis' => $row['no_rekam_medis'],
+           'dasar_diagnosis' => $row['dasar_diagnosis'],
+           'bb_lahir' => $row['bb_lahir'],
+           'imunisasi' => $row['imunisasi'],
+           'asi_eksklusif' => $row['asi_eksklusif'],
+           'riwayat_keganasan_keluarga' => $row['riwayat_keganasan_keluarga'],
+           'ket_keganasan_keluarga' => $row['ket_keganasan_keluarga'],
+           'tata_laksana' => $row['tata_laksana'],
+           'staging_stadium' => $row['staging_stadium'],
+           'tgl_keluhan_pertama' => $row['tgl_keluhan_pertama'],
+           'tgl_diagnosis' => $row['tgl_diagnosis'],
+           'tgl_pertama_terapi' => $row['tgl_pertama_terapi'],
+           'status_validasi' => $row['status_validasi'],
+           'nama_unit' => $row['nama_unit'],
         ]);
     }
 }

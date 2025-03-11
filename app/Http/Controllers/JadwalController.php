@@ -24,6 +24,8 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'nama_lengkap' => 'required',
+            'no_registrasi' => 'required',
             'no_rekam_medis' => 'required',
             'id_dokter' => 'required',
             'tanggal' => 'required',
@@ -41,6 +43,8 @@ class JadwalController extends Controller
         } else {
 
             $jadwal = Jadwal::create([
+                'nama_lengkap' => $request->input('nama_lengkap'),
+                'no_registrasi' => $request->input('no_registrasi'),
                 'no_rekam_medis' => $request->input('no_rekam_medis'),
                 'id_dokter'   => $request->input('id_dokter'),
                 'tanggal'   => $request->input('tanggal'),
@@ -67,7 +71,8 @@ class JadwalController extends Controller
     public function show($no_rekam_medis = null)
     {
         $jadwal = Jadwal::where('no_rekam_medis',$no_rekam_medis)
-                          ->orWhere('id',$no_rekam_medis)
+                          ->orWhere('no_registrasi',$no_rekam_medis)
+                          ->orWhereRaw('LOWER(nama_lengkap) LIKE ?', [strtolower('%'.$no_rekam_medis.'%')])
                           ->get();
         // $jadwal = $no_registrasi;
        
@@ -90,6 +95,8 @@ class JadwalController extends Controller
     {
         // Validasi input
         $validator = Validator::make($request->all(), [
+            'nama_lengkap' => 'nullable',
+            'no_registrasi' => 'nullable',
             'no_rekam_medis' => 'nullable',
             'id_dokter' => 'nullable',
             'tanggal' => 'nullable',

@@ -15,6 +15,6 @@ class ImportProfile extends Model
      * @var array
      */
     protected $fillable = [
-        'nama_lengkap','no_registrasi','no_rekam_medis','nik','tempat_lahir','tanggal_lahir','jenis_kelamin','usia_terdiagnosis','alamat','propinsi','kabupaten','kecamatan','desa','np_hp','no_hp2','no_bpjs','bb','tb','kesimpulan'
+        'nama_lengkap','no_registrasi','no_rekam_medis','nik','tempat_lahir','tanggal_lahir','jenis_kelamin','usia_terdiagnosis','alamat','propinsi','kabupaten','kecamatan','desa','no_hp','no_hp2','no_bpjs','bb','tb','kesimpulan'
     ];
 }
