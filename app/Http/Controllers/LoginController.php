@@ -16,10 +16,8 @@ use function Laravel\Prompts\error;
 class LoginController extends Controller
 {    
     //fungsi untuk menambahkan data user
-    public function ceklogin(Request $request, $reqtoken)
+    public function ceklogin(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $validator = Validator::make($request->all(), [
                 'email' => 'required',
                 'password' => 'required',
@@ -78,12 +76,7 @@ class LoginController extends Controller
                     ],401);
                 }
             }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
+
         
     }
 
