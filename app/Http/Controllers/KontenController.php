@@ -10,139 +10,182 @@ use Illuminate\Support\Facades\Validator;
 class KontenController extends Controller
 {
     //fungsi untuk menampilkan seluruh data konten
-    public function index()
+    public function index(Request $reqtoken)
     {
-        $konten = Konten::all();    
-        return response()->json([
-            'success' => true,
-            'message' =>'List Semua Konten',
-            'data'    => $konten
-        ], 200);
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            $konten = Konten::all();    
+            return response()->json([
+                'success' => true,
+                'message' =>'List Semua Konten',
+                'data'    => $konten
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        }          
     }    
 
     //fungsi untuk menambahkan data konten
-    public function store(Request $request)
+    public function store(Request $request, $reqtoken)
     {
-        $validator = Validator::make($request->all(), [
-            'judul' => 'required',
-            'sumber' => 'required',
-            'embed' => 'required',
-        ]);
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            $validator = Validator::make($request->all(), [
+                'judul' => 'required',
+                'sumber' => 'required',
+                'embed' => 'required',
+            ]);
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
 
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Semua kolom required wajib diisi!',
+                    'data'   => $validator->errors()
+                ],401);
+
+            } else {
+
+                $konten = Konten::create([
+                    'judul' => $request->input('judul'),
+                    'sumber'   => $request->input('sumber'),
+                    'embed' => $request->input('embed'),
+                ]);
+
+                if ($konten) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Konten berhasil disimpan!',
+                        'data' => $konten
+                    ], 201);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Konten gagal disimpan!',
+                    ], 400);
+                }
+            }
+        } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Semua kolom required wajib diisi!',
-                'data'   => $validator->errors()
-            ],401);
-
+                'message' => 'Unauthorised'
+            ], 400);
+        }   
+        
+    }
+    
+    //fungsi untuk mencari data konten berdasarkan judul konten
+    public function show($judul = null, Request $reqtoken)
+    {
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            $konten = Konten::where('judul',$judul)
+                                ->get();
+            // $konten = $no_registrasi;
+        
+            if($konten->isEmpty()){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data tidak ditemukan'
+                ], 404);
+            }else{
+                return response()->json([
+                    'success' => true,
+                    'message' =>'Data Konten',
+                    'data'    => $konten
+                ], 200);
+            } 
         } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        }   
+               
+    }
 
-            $konten = Konten::create([
-                'judul' => $request->input('judul'),
-                'sumber'   => $request->input('sumber'),
-                'embed' => $request->input('embed'),
+    //fungsi untuk update data konten berdasarkan id konten
+    public function update(Request $request, $id, $reqtoken)
+    {
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            // Validasi input
+            $validator = Validator::make($request->all(), [
+                'judul' => 'nullable',
+                'sumber' => 'nullable',
+                'embed' => 'nullable',
             ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validasi gagal!',
+                    'data'   => $validator->errors()
+                ], 401);
+            }
+
+            // Ambil data lama dari database
+            $existingKonten = Konten::find($id);
+
+            if (!$existingKonten) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Konten tidak ditemukan!'
+                ], 404);
+            }
+
+            // Gabungkan data lama dengan data baru
+            $updatedData = array_merge(
+                $existingKonten->toArray(),
+                $request->only(array_keys($validator->getRules()))
+            );
+
+            // Update data ke database
+            $konten = $existingKonten->update($updatedData);
 
             if ($konten) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Konten berhasil disimpan!',
-                    'data' => $konten
-                ], 201);
+                    'message' => 'Data konten berhasil diperbarui!',
+                    'data' => $updatedData
+                ], 200);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Konten gagal disimpan!',
+                    'message' => 'Data konten gagal diperbarui!'
                 ], 400);
-            }
-        }
-    }
-    
-    //fungsi untuk mencari data konten berdasarkan judul konten
-    public function show($judul = null)
-    {
-        $konten = Konten::where('judul',$judul)
-                            ->get();
-        // $konten = $no_registrasi;
-       
-        if($konten->isEmpty()){
-            return response()->json([
-                'success' => false,
-                'message' => 'Data tidak ditemukan'
-            ], 404);
-        }else{
-            return response()->json([
-                'success' => true,
-                'message' =>'Data Konten',
-                'data'    => $konten
-            ], 200);
-        }        
-    }
-
-    //fungsi untuk update data konten berdasarkan id konten
-    public function update(Request $request, $id)
-    {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
-            'judul' => 'nullable',
-            'sumber' => 'nullable',
-            'embed' => 'nullable',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validasi gagal!',
-                'data'   => $validator->errors()
-            ], 401);
-        }
-
-        // Ambil data lama dari database
-        $existingKonten = Konten::find($id);
-
-        if (!$existingKonten) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Konten tidak ditemukan!'
-            ], 404);
-        }
-
-        // Gabungkan data lama dengan data baru
-        $updatedData = array_merge(
-            $existingKonten->toArray(),
-            $request->only(array_keys($validator->getRules()))
-        );
-
-        // Update data ke database
-        $konten = $existingKonten->update($updatedData);
-
-        if ($konten) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Data konten berhasil diperbarui!',
-                'data' => $updatedData
-            ], 200);
+            }    
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Data konten gagal diperbarui!'
+                'message' => 'Unauthorised'
             ], 400);
-        }
+        }           
     }
 
     //fungsi untuk menghapus data konten berdasarkan id konten
-    public function destroy($id)
+    public function destroy($id, Request $reqtoken)
     {
-        $konten = Konten::where('id',$id)->first();
-            $konten->delete();   
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            $konten = Konten::where('id',$id)->first();
+                $konten->delete();   
 
-        if ($konten) {
+            if ($konten) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Konten berhasil dihapus!',
+                ], 200);
+            }    
+        } else {
             return response()->json([
-                'success' => true,
-                'message' => 'Konten berhasil dihapus!',
-            ], 200);
-        }
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        }   
+        
     }
 }

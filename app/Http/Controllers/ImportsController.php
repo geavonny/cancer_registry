@@ -15,147 +15,192 @@ use App\Http\Controllers\Controller;
 class ImportsController extends Controller 
 {
     // IMPORT FILE DIAGNOSIS
-    public function diagnosis(Request $request)
+    public function diagnosis(Request $request, $reqtoken)
     {
-        // Manual validation using Lumen's Validator
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
-        ]);
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            // Manual validation using Lumen's Validator
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
+            ]);
 
-        // If validation fails, return a response with the errors
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
-        }
+            // If validation fails, return a response with the errors
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 400);
+            }
 
-        // Check if the file is present in the request
-        if ($request->hasFile('file')) {
-            // Get the file from the request
-            $file = $request->file('file');
-            
-            // Import the file directly
-            Excel::import(new DiagnosisImport, $file);
+            // Check if the file is present in the request
+            if ($request->hasFile('file')) {
+                // Get the file from the request
+                $file = $request->file('file');
+                
+                // Import the file directly
+                Excel::import(new DiagnosisImport, $file);
 
-            // Return a success message
-            return response()->json(['message' => 'Imported Successfully!'], 200);
-        }
+                // Return a success message
+                return response()->json(['message' => 'Imported Successfully!'], 200);
+            }
 
-        // If no file is uploaded, return an error message
-        return response()->json(['error' => 'No file uploaded.'], 400);
+            // If no file is uploaded, return an error message
+            return response()->json(['error' => 'No file uploaded.'], 400);    
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        } 
+        
     }
 
     // IMPORT FILE PROFILE PASIEN
-    public function profile(Request $request)
+    public function profile(Request $request, $reqtoken)
     {
-        // Manual validation using Lumen's Validator
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
-        ]);
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            // Manual validation using Lumen's Validator
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
+            ]);
 
-        // If validation fails, return a response with the errors
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
-        }
+            // If validation fails, return a response with the errors
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 400);
+            }
 
-        // Check if the file is present in the request
-        if ($request->hasFile('file')) {
-            // Get the file from the request
-            $file = $request->file('file');
-            
-            // Import the file directly
-            Excel::import(new ProfileImport, $file);
+            // Check if the file is present in the request
+            if ($request->hasFile('file')) {
+                // Get the file from the request
+                $file = $request->file('file');
+                
+                // Import the file directly
+                Excel::import(new ProfileImport, $file);
 
-            // Return a success message
-            return response()->json(['message' => 'Imported Successfully!'], 200);
-        }
+                // Return a success message
+                return response()->json(['message' => 'Imported Successfully!'], 200);
+            }
 
-        // If no file is uploaded, return an error message
-        return response()->json(['error' => 'No file uploaded.'], 400);
+            // If no file is uploaded, return an error message
+            return response()->json(['error' => 'No file uploaded.'], 400);    
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        } 
+        
     }
 
     // IMPORT FILE HISTORI PASIEN
-    public function histori(Request $request)
+    public function histori(Request $request, $reqtoken)
     {
-        // Manual validation using Lumen's Validator
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
-        ]);
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            // Manual validation using Lumen's Validator
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
+            ]);
 
-        // If validation fails, return a response with the errors
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
-        }
+            // If validation fails, return a response with the errors
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 400);
+            }
 
-        // Check if the file is present in the request
-        if ($request->hasFile('file')) {
-            // Get the file from the request
-            $file = $request->file('file');
-            
-            // Import the file directly
-            Excel::import(new HistoriImport, $file);
+            // Check if the file is present in the request
+            if ($request->hasFile('file')) {
+                // Get the file from the request
+                $file = $request->file('file');
+                
+                // Import the file directly
+                Excel::import(new HistoriImport, $file);
 
-            // Return a success message
-            return response()->json(['message' => 'Imported Successfully!'], 200);
-        }
+                // Return a success message
+                return response()->json(['message' => 'Imported Successfully!'], 200);
+            }
 
-        // If no file is uploaded, return an error message
-        return response()->json(['error' => 'No file uploaded.'], 400);
+            // If no file is uploaded, return an error message
+            return response()->json(['error' => 'No file uploaded.'], 400);    
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        } 
+        
     }
 
     // IMPORT FILE RUJUKAN PASIEN
-    public function rujukan(Request $request)
+    public function rujukan(Request $request, $reqtoken)
     {
-        // Manual validation using Lumen's Validator
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
-        ]);
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            // Manual validation using Lumen's Validator
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
+            ]);
 
-        // If validation fails, return a response with the errors
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
-        }
+            // If validation fails, return a response with the errors
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 400);
+            }
 
-        // Check if the file is present in the request
-        if ($request->hasFile('file')) {
-            // Get the file from the request
-            $file = $request->file('file');
-            
-            // Import the file directly
-            Excel::import(new RujukanImport, $file);
+            // Check if the file is present in the request
+            if ($request->hasFile('file')) {
+                // Get the file from the request
+                $file = $request->file('file');
+                
+                // Import the file directly
+                Excel::import(new RujukanImport, $file);
 
-            // Return a success message
-            return response()->json(['message' => 'Imported Successfully!'], 200);
-        }
+                // Return a success message
+                return response()->json(['message' => 'Imported Successfully!'], 200);
+            }
 
-        // If no file is uploaded, return an error message
-        return response()->json(['error' => 'No file uploaded.'], 400);
+            // If no file is uploaded, return an error message
+            return response()->json(['error' => 'No file uploaded.'], 400);    
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        } 
+        
     }
 
     // IMPORT FILE REKAM MEDIS PASIEN
-    public function rekmed(Request $request)
+    public function rekmed(Request $request, $reqtoken)
     {
-        // Manual validation using Lumen's Validator
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
-        ]);
+        $token = $reqtoken->header('Authorization');
+        if($token){
+            // Manual validation using Lumen's Validator
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
+            ]);
 
-        // If validation fails, return a response with the errors
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
-        }
+            // If validation fails, return a response with the errors
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 400);
+            }
 
-        // Check if the file is present in the request
-        if ($request->hasFile('file')) {
-            // Get the file from the request
-            $file = $request->file('file');
-            
-            // Import the file directly
-            Excel::import(new RekmedImport, $file);
+            // Check if the file is present in the request
+            if ($request->hasFile('file')) {
+                // Get the file from the request
+                $file = $request->file('file');
+                
+                // Import the file directly
+                Excel::import(new RekmedImport, $file);
 
-            // Return a success message
-            return response()->json(['message' => 'Imported Successfully!'], 200);
-        }
+                // Return a success message
+                return response()->json(['message' => 'Imported Successfully!'], 200);
+            }
 
-        // If no file is uploaded, return an error message
-        return response()->json(['error' => 'No file uploaded.'], 400);
+            // If no file is uploaded, return an error message
+            return response()->json(['error' => 'No file uploaded.'], 400);    
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        } 
+        
     }
 }

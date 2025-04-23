@@ -23,15 +23,20 @@ class ProfileController extends Controller
     public function index(Request $reqtoken)
     {
         $token = $reqtoken ->header('Authorization');   
-        if($token){
-            $profile = Profile::all();
-            // $profile = 'test';    
+            if($token){
+                $profile = Profile::all();
+                // $profile = 'test';    
+                return response()->json([
+                'success' => true,
+                'message' =>'List Semua Profile Pasien',
+                'data'    => $profile
+            ], 200);
+        } else {
             return response()->json([
-            'success' => true,
-            'message' =>'List Semua Profile Pasien',
-            'data'    => $profile
-        ], 200);
-        }
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        }   
     }    
 
     //fungsi untuk menambahkan data profil pasien
@@ -107,7 +112,12 @@ class ProfileController extends Controller
                 }
     
             }
-        }         
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        }           
     }
     
     /*fungsi untuk mencari data profil pasien berdasarkan no rekam medis, 
@@ -134,7 +144,12 @@ class ProfileController extends Controller
                     'data'    => $profile
                 ], 200);
             } 
-        }               
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        }                 
     }
 
     //fungsi untuk update data profil pasien berdasarkan id pasien
@@ -204,7 +219,12 @@ class ProfileController extends Controller
                     'message' => 'Profile pasien gagal diperbarui!'
                 ], 400);
             }    
-        }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        }   
         
     }
 
@@ -230,6 +250,11 @@ class ProfileController extends Controller
                     'message' => 'Profile pasien berhasil dihapus!',
                 ], 200);
             }            
-        }        
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorised'
+            ], 400);
+        }           
     }
 }
