@@ -11,29 +11,19 @@ use Illuminate\Support\Facades\Hash;
 class PenggunaController extends Controller
 {
     //fungsi untuk menampilkan seluruh data user
-    public function index(Request $reqtoken)
+    public function index()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $pengguna = Pengguna::all();    
             return response()->json([
                 'success' => true,
                 'message' =>'List Semua User',
                 'data'    => $pengguna
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            ], 200);     
     }    
 
     //fungsi untuk menambahkan data user
-    public function store(Request $request, $reqtoken)
+    public function store(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $validator = Validator::make($request->all(), [
                 'username' => 'required',
                 'password' => 'required',
@@ -72,20 +62,12 @@ class PenggunaController extends Controller
                         'message' => 'User gagal disimpan!',
                     ], 400);
                 }
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            }      
     }
     
     //fungsi untuk mencari data user berdasarkan id user
-    public function show($id = null, Request $reqtoken)
+    public function show($id = null)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $pengguna = Pengguna::where('id',$id)
                                 // ->orWhere('no_registrasi',$username)
                                 ->get();
@@ -102,20 +84,12 @@ class PenggunaController extends Controller
                     'message' =>'Data User berdasarkan username',
                     'data'    => $pengguna
                 ], 200);
-            }  
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }                
+            }                
     }
 
     //fungsi untuk update data user berdasarkan id user
-    public function update(Request $request, $id, $reqtoken)
+    public function update(Request $request, $id)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // Validasi input
             $validator = Validator::make($request->all(), [
                 'username' => 'nullable',
@@ -163,20 +137,12 @@ class PenggunaController extends Controller
                     'success' => false,
                     'message' => 'Data User gagal diperbarui!'
                 ], 400);
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            }       
     }
 
     //fungsi untuk menghapus data user berdasarkan id user
-    public function destroy($id, Request $reqtoken)
+    public function destroy($id)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $pengguna = Pengguna::where('id',$id)->first();
                 $pengguna->delete();   
 
@@ -185,12 +151,6 @@ class PenggunaController extends Controller
                     'success' => true,
                     'message' => 'User berhasil dihapus!',
                 ], 200);
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }           
+            }        
     }
 }

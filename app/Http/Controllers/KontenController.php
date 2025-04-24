@@ -10,29 +10,19 @@ use Illuminate\Support\Facades\Validator;
 class KontenController extends Controller
 {
     //fungsi untuk menampilkan seluruh data konten
-    public function index(Request $reqtoken)
+    public function index()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $konten = Konten::all();    
             return response()->json([
                 'success' => true,
                 'message' =>'List Semua Konten',
                 'data'    => $konten
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            ], 200);      
     }    
 
     //fungsi untuk menambahkan data konten
-    public function store(Request $request, $reqtoken)
+    public function store(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $validator = Validator::make($request->all(), [
                 'judul' => 'required',
                 'sumber' => 'required',
@@ -67,21 +57,12 @@ class KontenController extends Controller
                         'message' => 'Konten gagal disimpan!',
                     ], 400);
                 }
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
-        
+            }        
     }
     
     //fungsi untuk mencari data konten berdasarkan judul konten
-    public function show($judul = null, Request $reqtoken)
+    public function show($judul = null)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $konten = Konten::where('judul',$judul)
                                 ->get();
             // $konten = $no_registrasi;
@@ -97,21 +78,12 @@ class KontenController extends Controller
                     'message' =>'Data Konten',
                     'data'    => $konten
                 ], 200);
-            } 
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
-               
+            }                
     }
 
     //fungsi untuk update data konten berdasarkan id konten
-    public function update(Request $request, $id, $reqtoken)
+    public function update(Request $request, $id)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // Validasi input
             $validator = Validator::make($request->all(), [
                 'judul' => 'nullable',
@@ -157,20 +129,12 @@ class KontenController extends Controller
                     'success' => false,
                     'message' => 'Data konten gagal diperbarui!'
                 ], 400);
-            }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }           
+            }           
     }
 
     //fungsi untuk menghapus data konten berdasarkan id konten
-    public function destroy($id, Request $reqtoken)
+    public function destroy($id)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $konten = Konten::where('id',$id)->first();
                 $konten->delete();   
 
@@ -179,13 +143,6 @@ class KontenController extends Controller
                     'success' => true,
                     'message' => 'Konten berhasil dihapus!',
                 ], 200);
-            }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
-        
+            }            
     }
 }

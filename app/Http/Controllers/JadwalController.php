@@ -10,30 +10,21 @@ use Illuminate\Support\Facades\Validator;
 class JadwalController extends Controller
 {
     //fungsi untuk menampilkan data jadwal checkup seluruh pasien
-    public function index(Request $reqtoken)
+    public function index()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $jadwal = Jadwal::all();    
             return response()->json([
                 'success' => true,
                 'message' =>'List Semua Jadwal',
                 'data'    => $jadwal
             ], 200);    
-        }else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
+        
         
     }    
 
     //fungsi untuk menambahkan data jadwal checkup pasien
-    public function store(Request $request, $reqtoken)
+    public function store(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $validator = Validator::make($request->all(), [
                 'nama_lengkap' => 'required',
                 'no_registrasi' => 'required',
@@ -75,21 +66,14 @@ class JadwalController extends Controller
                     ], 400);
                 }
             }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
+         
         
     }
     
     /*fungsi untuk mencari data jadwal checkup berdasarkan no rekam medis pasien
      dan id jadwal checkup pasien*/
-    public function show($no_rekam_medis = null, Request $reqtoken)
+    public function show($no_rekam_medis = null)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $jadwal = Jadwal::where('no_rekam_medis',$no_rekam_medis)
                             ->orWhere('no_registrasi',$no_rekam_medis)
                             ->orWhereRaw('LOWER(nama_lengkap) LIKE ?', [strtolower('%'.$no_rekam_medis.'%')])
@@ -108,20 +92,13 @@ class JadwalController extends Controller
                     'data'    => $jadwal
                 ], 200);
             }    
-        }else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
+        
                 
     }
 
     //fungsi untuk update data jadwal checkup berdasarkan id jadwal checkup pasien
-    public function update(Request $request, $id, $reqtoken)
+    public function update(Request $request, $id)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // Validasi input
             $validator = Validator::make($request->all(), [
                 'nama_lengkap' => 'nullable',
@@ -171,20 +148,13 @@ class JadwalController extends Controller
                     'message' => 'Data Jadwal gagal diperbarui!'
                 ], 400);
             }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
+         
         
     }
 
     //fungsi untuk menghapus data jadwal checkup berdasarkan id jadwal checkup pasien
-    public function destroy($no_rekam_medis, Request $reqtoken)
+    public function destroy($no_rekam_medis)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $jadwal = Jadwal::where('no_rekam_medis',$no_rekam_medis)->first();
                 $jadwal->delete();   
 
@@ -194,12 +164,7 @@ class JadwalController extends Controller
                     'message' => 'Jadwal berhasil dihapus!',
                 ], 200);
             }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
+         
         
     }
 }

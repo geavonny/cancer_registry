@@ -15,10 +15,9 @@ use App\Http\Controllers\Controller;
 class ImportsController extends Controller 
 {
     // IMPORT FILE DIAGNOSIS
-    public function diagnosis(Request $request, $reqtoken)
+    public function diagnosis(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
+        
             // Manual validation using Lumen's Validator
             $validator = Validator::make($request->all(), [
                 'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
@@ -43,20 +42,13 @@ class ImportsController extends Controller
 
             // If no file is uploaded, return an error message
             return response()->json(['error' => 'No file uploaded.'], 400);    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 
     // IMPORT FILE PROFILE PASIEN
-    public function profile(Request $request, $reqtoken)
+    public function profile(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
+        
             // Manual validation using Lumen's Validator
             $validator = Validator::make($request->all(), [
                 'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
@@ -81,20 +73,13 @@ class ImportsController extends Controller
 
             // If no file is uploaded, return an error message
             return response()->json(['error' => 'No file uploaded.'], 400);    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 
     // IMPORT FILE HISTORI PASIEN
-    public function histori(Request $request, $reqtoken)
+    public function histori(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
+        
             // Manual validation using Lumen's Validator
             $validator = Validator::make($request->all(), [
                 'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
@@ -119,20 +104,13 @@ class ImportsController extends Controller
 
             // If no file is uploaded, return an error message
             return response()->json(['error' => 'No file uploaded.'], 400);    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 
     // IMPORT FILE RUJUKAN PASIEN
-    public function rujukan(Request $request, $reqtoken)
+    public function rujukan(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
+        
             // Manual validation using Lumen's Validator
             $validator = Validator::make($request->all(), [
                 'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
@@ -157,20 +135,13 @@ class ImportsController extends Controller
 
             // If no file is uploaded, return an error message
             return response()->json(['error' => 'No file uploaded.'], 400);    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 
     // IMPORT FILE REKAM MEDIS PASIEN
-    public function rekmed(Request $request, $reqtoken)
+    public function rekmed(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
+        
             // Manual validation using Lumen's Validator
             $validator = Validator::make($request->all(), [
                 'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
@@ -195,12 +166,6 @@ class ImportsController extends Controller
 
             // If no file is uploaded, return an error message
             return response()->json(['error' => 'No file uploaded.'], 400);    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 }

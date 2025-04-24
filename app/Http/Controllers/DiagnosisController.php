@@ -10,30 +10,20 @@ use Illuminate\Support\Facades\Validator;
 class DiagnosisController extends Controller
 {
     //fungsi untuk menampilkan data diagnosis seluruh pasien
-    public function index(Request $reqtoken) 
+    public function index() 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $diagnosis = Diagnosis::all();
             // $diagnosis = 'test';    
             return response()->json([
                 'success' => true,
                 'message' =>'List Semua Diagnosis Pasien',
                 'data'    => $diagnosis
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }           
+            ], 200);     
     }
 
     //fungsi untuk menambahkan data diagnosis pasien
-    public function store(Request $request, $reqtoken) 
+    public function store(Request $request) 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $validator = Validator::make($request->all(), [
                 'no_rekam_medis'   => 'nullable',
                 'kode_subgroup' => 'nullable',
@@ -81,20 +71,12 @@ class DiagnosisController extends Controller
                     ], 400);
                 }
     
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            }              
     }
 
     //fungsi untuk mencari data diagnosis pasien berdasarkan no rekam medis dan id
-    public function show($no_rekam_medis = null, Request $reqtoken) 
+    public function show($no_rekam_medis = null) 
     {  
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)
                                 ->orWhere('no_registrasi',$no_rekam_medis)
                                 ->orWhere('nama_lengkap',$no_rekam_medis)
@@ -110,20 +92,12 @@ class DiagnosisController extends Controller
                     'message' =>'Diagnosis pasien',
                     'data'    => $diagnosis
                 ], 200);
-            } 
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }                 
+            }                       
     }
 
     //fungsi untuk update data diagnosis pasien
-    public function update(Request $request, $id, $reqtoken) 
+    public function update(Request $request, $id) 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // Validasi input
             $validator = Validator::make($request->all(), [
                 'no_rekam_medis'   => 'nullable',
@@ -175,20 +149,12 @@ class DiagnosisController extends Controller
                     'success' => false,
                     'message' => 'Diagnosis pasien gagal diperbarui!'
                 ], 400);
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            }                
     }
 
     //fungsi untuk menghapus data diagnosis pasien
-    public function destroy($no_rekam_medis, Request $reqtoken) 
+    public function destroy($no_rekam_medis) 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $diagnosis = Diagnosis::where($no_rekam_medis)->first();
             $diagnosis->delete();
 
@@ -197,12 +163,6 @@ class DiagnosisController extends Controller
                     'success' => true,
                     'message' => 'Diagnosis pasien berhasil dihapus!',
                 ], 200);
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            }        
     }
 }

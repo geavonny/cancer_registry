@@ -20,30 +20,21 @@ class ProfileController extends Controller
     // }
     
     //fungsi untuk menampilkan data profil seluruh pasien
-    public function index(Request $reqtoken)
+    public function index()
     {
-        $token = $reqtoken ->header('Authorization');   
-            if($token){
                 $profile = Profile::all();
                 // $profile = 'test';    
                 return response()->json([
                 'success' => true,
                 'message' =>'List Semua Profile Pasien',
                 'data'    => $profile
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
+            ], 200); 
     }    
 
     //fungsi untuk menambahkan data profil pasien
-    public function store(Request $request, $reqtoken)
+    public function store(Request $request)
     {
-        $token = $reqtoken ->header('Authorization');
-        if($token){
+        
             $validator = Validator::make($request->all(), [
                 'nama_lengkap' => 'required',
                 'nik'   => 'nullable',
@@ -111,21 +102,13 @@ class ProfileController extends Controller
                     ], 400);
                 }
     
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }           
+            }       
     }
     
     /*fungsi untuk mencari data profil pasien berdasarkan no rekam medis, 
     no registrasi dan id pasien*/
-    public function show($no_rekam_medis = null, Request $reqtoken)
+    public function show($no_rekam_medis = null)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $profile = Profile::where('no_rekam_medis',$no_rekam_medis)
                             ->orWhere('no_registrasi',$no_rekam_medis)
                             ->orWhereRaw('LOWER(nama_lengkap) LIKE ?', [strtolower('%'.$no_rekam_medis.'%')])
@@ -143,20 +126,12 @@ class ProfileController extends Controller
                     'message' =>'Profile pasien',
                     'data'    => $profile
                 ], 200);
-            } 
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }                 
+            }                  
     }
 
     //fungsi untuk update data profil pasien berdasarkan id pasien
-    public function update(Request $request, $id, $reqtoken)
+    public function update(Request $request, $id)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // Validasi input
             $validator = Validator::make($request->all(), [
                 'nama_lengkap' => 'nullable',
@@ -218,21 +193,12 @@ class ProfileController extends Controller
                     'success' => false,
                     'message' => 'Profile pasien gagal diperbarui!'
                 ], 400);
-            }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }   
-        
+            }            
     }
 
     //fungsi untuk menghapus seluruh data pasien berdasarkan no rekam medis
-    public function destroy($no_rekam_medis, Request $reqtoken)
+    public function destroy($no_rekam_medis)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $profile = Profile::where('no_rekam_medis',$no_rekam_medis)->first();
                 $profile->delete();
             $histori = Histori::where('no_rekam_medis',$no_rekam_medis)->first();
@@ -249,12 +215,6 @@ class ProfileController extends Controller
                     'success' => true,
                     'message' => 'Profile pasien berhasil dihapus!',
                 ], 200);
-            }            
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }           
+            }                    
     }
 }

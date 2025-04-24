@@ -10,29 +10,19 @@ use Illuminate\Support\Facades\Validator;
 class FaqController extends Controller
 {
     //fungsi untuk menampilkan data FAQ
-    public function index(Request $reqtoken) 
+    public function index() 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $faq = Faq::all();    
             return response()->json([
                 'success' => true,
                 'message' =>'List Semua FAQ',
                 'data'    => $faq
-            ], 200);    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            ], 200);            
     }    
 
     //fungsi untuk menambahkan data FAQ
-    public function store(Request $request, $reqtoken) 
+    public function store(Request $request) 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $validator = Validator::make($request->all(), [
                 'pertanyaan' => 'required',
                 'jawaban' => 'required',
@@ -65,20 +55,12 @@ class FaqController extends Controller
                         'message' => 'FAQ gagal disimpan!',
                     ], 400);
                 }
-            }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            }            
     }
     
     //fungsi untuk mencari data FAQ berdasarkan id FAQ
-    public function show($id = null, Request $reqtoken) 
+    public function show($id = null) 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $faq = Faq::where('id',$id)
                                 ->get();
             // $faq = $no_registrasi;
@@ -94,20 +76,12 @@ class FaqController extends Controller
                     'message' =>'Data FAQ',
                     'data'    => $faq
                 ], 200);
-            }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }                  
+            }                    
     }
 
     //fungsi untuk update data FAQ berdasarkan id FAQ
-    public function update(Request $request, $id, $reqtoken) 
+    public function update(Request $request, $id) 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // Validasi input
             $validator = Validator::make($request->all(), [
                 'pertanyaan' => 'nullable',
@@ -152,20 +126,12 @@ class FaqController extends Controller
                     'success' => false,
                     'message' => 'Data FAQ gagal diperbarui!'
                 ], 400);
-            }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+            }            
     }
 
     //fungsi untuk menghapus data FAQ berdasarkan id FAQ
-    public function destroy($id, Request $reqtoken) 
+    public function destroy($id) 
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $faq = Faq::where('id',$id)->first();
                 $faq->delete();   
 
@@ -174,12 +140,6 @@ class FaqController extends Controller
                     'success' => true,
                     'message' => 'FAQ berhasil dihapus!',
                 ], 200);
-            }    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }           
+            }             
     }
 }

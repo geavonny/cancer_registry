@@ -20,10 +20,8 @@ class ExcelExportController extends Controller
     }
 
     // Fungsi untuk mengekspor data ke Excel
-    public function exprujukan(Request $reqtoken)
+    public function exprujukan()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // dd('Hello world');
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
@@ -61,19 +59,11 @@ class ExcelExportController extends Controller
             $writer = new Xlsx($spreadsheet);
             $writer->save("php://output");
             exit();    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 
-    public function expprofile(Request $reqtoken)
+    public function expprofile()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // dd('Hello world');
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
@@ -139,19 +129,11 @@ class ExcelExportController extends Controller
             $writer = new Xlsx($spreadsheet);
             $writer->save("php://output");
             exit();    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 
-    public function expdiagnosis(Request $reqtoken)
+    public function expdiagnosis()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // dd('Hello world');
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
@@ -201,19 +183,11 @@ class ExcelExportController extends Controller
             $writer = new Xlsx($spreadsheet);
             $writer->save("php://output");
             exit();    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 
-    public function exphistori(Request $reqtoken)
+    public function exphistori()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // dd('Hello world');
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
@@ -273,19 +247,11 @@ class ExcelExportController extends Controller
             $writer = new Xlsx($spreadsheet);
             $writer->save("php://output");
             exit();    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 
-    public function exprekam(Request $reqtoken)
+    public function exprekam()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // dd('Hello world');
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
@@ -377,12 +343,6 @@ class ExcelExportController extends Controller
             $writer = new Xlsx($spreadsheet);
             $writer->save("php://output");
             exit();    
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        } 
         
     }
 }

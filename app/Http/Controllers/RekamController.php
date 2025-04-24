@@ -10,10 +10,8 @@ use Illuminate\Support\Facades\Validator;
 class RekamController extends Controller
 {
     //fungsi untuk menampilkan data rekam medis seluruh pasien
-    public function index(Request $reqtoken)
+    public function index()
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $rekam = Rekam::all();
             // $rekam = 'test';    
             return response()->json([
@@ -21,19 +19,12 @@ class RekamController extends Controller
                 'message' =>'List Semua Rekam Medis Pasien',
                 'data'    => $rekam
             ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }           
+                 
     }    
 
     //fungsi untuk menambahkan data rekam medis pasien
-    public function store(Request $request, $reqtoken)
+    public function store(Request $request)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $validator = Validator::make($request->all(), [
                 'no_rekam_medis' => 'required',
                 'tgl_kunjungan'   => 'nullable',
@@ -124,19 +115,12 @@ class RekamController extends Controller
                 }
     
             }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+                
     }
     
     //fungsi untuk mencari data rekam medis pasien berdasarkan no rekam medis dan id pasien
-    public function show($no_rekam_medis = null, Request $reqtoken)
+    public function show($no_rekam_medis = null)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)
                             ->orWhere('no_registrasi',$no_rekam_medis)
                             ->orWhere('nama_lengkap',$no_rekam_medis)
@@ -155,19 +139,12 @@ class RekamController extends Controller
                     'data'    => $rekam
                 ], 200);
             }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }                  
+                        
     }
     
     //fungsi untuk update data rekam medis pasien berdasarkan id pasien
-    public function update(Request $request, $id, $reqtoken)
+    public function update(Request $request, $id)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             // Validasi input
             $validator = Validator::make($request->all(), [
                 'no_rekam_medis' => 'nullable',
@@ -241,19 +218,12 @@ class RekamController extends Controller
                     'message' => 'Rekam Medis pasien gagal diperbarui!'
                 ], 400);
             }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }          
+                
     }
 
     //fungsi untuk menghapus data rekam medis pasien berdasarkan no rekam medis pasien
-    public function destroy($no_rekam_medis, Request $reqtoken)
+    public function destroy($no_rekam_medis)
     {
-        $token = $reqtoken->header('Authorization');
-        if($token){
             $rekam = Rekam::where($no_rekam_medis)->first();
             $rekam->delete();
 
@@ -263,11 +233,6 @@ class RekamController extends Controller
                     'message' => 'Rekam medis pasien berhasil dihapus!',
                 ], 200);
             }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorised'
-            ], 400);
-        }           
+                 
     }
 }
