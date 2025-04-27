@@ -26,6 +26,8 @@ class RujukanController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
+                'nama_lengkap'   => 'required',
+                'no_registrasi'   => 'required',
                 'no_rekam_medis'   => 'nullable',
                 'ppk' => 'nullable',
                 'tgl_ppk'   => 'required',
@@ -42,6 +44,8 @@ class RujukanController extends Controller
             } else {
     
                 $rujukan = Rujukan::create([
+                    'nama_lengkap'   => $request->input('nama_lengkap'),
+                    'no_registrasi'   => $request->input('no_registrasi'),
                     'no_rekam_medis'   => $request->input('no_rekam_medis'),
                     'ppk' => $request->input('ppk'),
                     'tgl_ppk'   => $request->input('tgl_ppk'),
@@ -91,6 +95,8 @@ class RujukanController extends Controller
     {
             // Validasi input
             $validator = Validator::make($request->all(), [
+                'nama_lengkap'   => 'nullable',
+                'no_registrasi'   => 'nullable',
                 'no_rekam_medis'   => 'nullable',
                 'ppk' => 'nullable',
                 'tgl_ppk' => 'nullable',

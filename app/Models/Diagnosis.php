@@ -15,7 +15,7 @@ class Diagnosis extends Model
      * @var array
      */
     protected $fillable = [
-        'no_rekam_medis','kode_subgroup','subgroup','kode_morfologi','morfologi','kode_topografi','topografi','literalitas',
+        'nama_lengkap','no_registrasi','no_rekam_medis','kode_subgroup','subgroup','kode_morfologi','morfologi','kode_topografi','topografi','literalitas',
         'tgl_pertama_konsultasi',
     ];
 }

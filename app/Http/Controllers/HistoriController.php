@@ -25,6 +25,8 @@ class HistoriController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
+                'nama_lengkap'   => 'required',
+                'no_registrasi'   => 'required',
                 'no_rekam_medis'   => 'nullable',
                 'dasar_diagnosis' => 'nullable',
                 'bb_lahir'   => 'required',
@@ -52,6 +54,8 @@ class HistoriController extends Controller
             } else {
     
                 $histori = Histori::create([
+                    'nama_lengkap'   => $request->input('nama_lengkap'),
+                    'no_registrasi'   => $request->input('no_registrasi'),
                     'no_rekam_medis'   => $request->input('no_rekam_medis'),
                     'dasar_diagnosis' => $request->input('dasar_diagnosis'),
                     'bb_lahir'   => $request->input('bb_lahir'),

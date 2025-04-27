@@ -25,6 +25,8 @@ class DiagnosisController extends Controller
     public function store(Request $request) 
     {
             $validator = Validator::make($request->all(), [
+                'nama_lengkap'   => 'required',
+                'no_registrasi'   => 'required',
                 'no_rekam_medis'   => 'nullable',
                 'kode_subgroup' => 'nullable',
                 'subgroup'   => 'nullable',
@@ -47,6 +49,8 @@ class DiagnosisController extends Controller
             } else {
     
                 $diagnosis = Diagnosis::create([
+                    'nama_lengkap'   => $request->input('nama_lengkap'),
+                    'no_registrasi'   => $request->input('no_registrasi'),
                     'no_rekam_medis'   => $request->input('no_rekam_medis'),
                     'kode_subgroup' => $request->input('kode_subgroup'),
                     'subgroup'   => $request->input('subgroup'),
@@ -100,6 +104,8 @@ class DiagnosisController extends Controller
     {
             // Validasi input
             $validator = Validator::make($request->all(), [
+                'nama_lengkap'   => 'nullable',
+                'no_registrasi'   => 'nullable',
                 'no_rekam_medis'   => 'nullable',
                 'kode_subgroup' => 'nullable',
                 'subgroup'   => 'nullable',

@@ -15,6 +15,6 @@ class Rujukan extends Model
      * @var array
      */
     protected $fillable = [
-        'no_rekam_medis','ppk','tgl_ppk',
+        'nama_lengkap','no_registrasi','no_rekam_medis','ppk','tgl_ppk',
     ];
 }

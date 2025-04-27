@@ -26,6 +26,8 @@ class RekamController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
+                'nama_lengkap' => 'required',
+                'no_registrasi' => 'required',
                 'no_rekam_medis' => 'required',
                 'tgl_kunjungan'   => 'nullable',
                 'keluhan_utama' => 'nullable',
@@ -69,6 +71,8 @@ class RekamController extends Controller
             } else {
     
                 $rekam = Rekam::create([
+                    'nama_lengkap' => $request->input('nama_lengkap'),
+                    'no_registrasi' => $request->input('no_registrasi'),
                     'no_rekam_medis' => $request->input('no_rekam_medis'),
                     'tgl_kunjungan'   => $request->input('tgl_kunjungan'),
                     'keluhan_utama' => $request->input('keluhan_utama'),
@@ -147,6 +151,8 @@ class RekamController extends Controller
     {
             // Validasi input
             $validator = Validator::make($request->all(), [
+                'nama_lengkap' => 'nullable',
+                'no_registrasi' => 'nullable',
                 'no_rekam_medis' => 'nullable',
                 'tgl_kunjungan'   => 'nullable',
                 'keluhan_utama' => 'nullable',
