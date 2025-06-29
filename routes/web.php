@@ -95,15 +95,16 @@ $router->post('/login', 'LoginController@ceklogin'); //membuat token untuk user 
 $router->post('/logout', 'LoginController@logout'); //untuk logout user dari sistem 
 
 //IMPORT FILE EXCEL
-$router->post('/import/diagnosis', 'ImportsController@diagnosis'); //untuk import file excel ke table database diagnosis
-$router->post('/import/profile', 'ImportsController@profile'); //untuk import file excel ke table database profile
-$router->post('/import/histori', 'ImportsController@histori'); //untuk import file excel ke table database histori
-$router->post('/import/rujukan', 'ImportsController@rujukan'); //untuk import file excel ke table database rujukan
-$router->post('/import/rekmed', 'ImportsController@rekmed'); //untuk import file excel ke table database rekmed
+$router->post('/import/Condition', 'ImportsController@diagnosis'); //untuk import file excel ke table database diagnosis
+$router->post('/import/Patient', 'ImportsController@profile'); //untuk import file excel ke table database profile
+$router->post('/import/DiagnosticReport', 'ImportsController@histori'); //untuk import file excel ke table database histori
+$router->post('/import/Referral', 'ImportsController@rujukan'); //untuk import file excel ke table database rujukan
+$router->post('/import/Observation', 'ImportsController@rekmed'); //untuk import file excel ke table database rekmed
 
 //EXPORT DATABASE KE EXCEL
-$router->get('/export/profile', 'ExcelExportController@expprofile'); //untuk export tabel profile pasien dari database ke Excel
-$router->get('/export/diagnosis', 'ExcelExportController@expdiagnosis'); //untuk export tabel diagnosis pasien dari database ke Excel
-$router->get('/export/histori', 'ExcelExportController@exphistori'); //untuk export tabel histori pasien dari database ke Excel
-$router->get('/export/rekmed', 'ExcelExportController@exprekam'); //untuk export tabel rekam medis pasien dari database ke Excel
-$router->get('/export/rujukan', 'ExcelExportController@exprujukan'); //untuk export tabel rujukan pasien dari database ke Excel
+$router->get('/export/Patient', 'ExcelExportController@expprofile'); //untuk export tabel profile pasien dari database ke Excel
+$router->get('/export/Condition', 'ExcelExportController@expdiagnosis'); //untuk export tabel diagnosis pasien dari database ke Excel
+$router->get('/export/DiagnosticReport', 'ExcelExportController@exphistori'); //untuk export tabel histori pasien dari database ke Excel
+$router->get('/export/Observation', 'ExcelExportController@exprekam'); //untuk export tabel rekam medis pasien dari database ke Excel
+$router->get('/export/Referral', 'ExcelExportController@exprujukan'); //untuk export tabel rujukan pasien dari database ke Excel
+$router->get('/export/Symptom', 'ExcelExportController@expgejala'); //untuk export tabel gejala pasien dari database ke Excel

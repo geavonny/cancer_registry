@@ -8,6 +8,7 @@ use App\Models\Rujukan;
 use App\Models\Profile;
 use App\Models\Histori;
 use App\Models\Diagnosis;
+use App\Models\Gejala;
 use App\Models\Rekam;
 use Illuminate\Http\Request;
 
@@ -337,6 +338,46 @@ class ExcelExportController extends Controller
 
             // Simpan dan download file Excel
             $fileName = "Data Export Rekam Medis Pasien.xlsx";
+            header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            header("Content-Disposition: attachment; filename=\"$fileName\"");
+            
+            $writer = new Xlsx($spreadsheet);
+            $writer->save("php://output");
+            exit();    
+        
+    }
+
+    public function expgejala()
+    {
+            // dd('Hello world');
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+
+            // Set judul sheet
+            $sheet->setTitle('Data Export Gejala Pasien');
+            
+            // Set header kolom
+            $sheet->setCellValue('A1', 'Id');
+            $sheet->setCellValue('B1', 'Nama Lengkap');
+            $sheet->setCellValue('C1', 'No Registrasi');
+            $sheet->setCellValue('D1', 'No Rekam Medis');
+            $sheet->setCellValue('E1', 'Gejala');
+
+            // Isi data 
+            $row = 2;
+
+            $data = Gejala::all();
+            foreach ($data as $value){
+                $sheet->setCellValue('A' . $row, $value->id);
+                $sheet->setCellValue('B' . $row, $value->nama_lengkap);
+                $sheet->setCellValue('C' . $row, $value->no_registrasi);
+                $sheet->setCellValue('D' . $row, $value->no_rekam_medis);
+                $sheet->setCellValue('E' . $row, $value->gejala);
+                $row++;
+            } 
+
+            // Simpan dan download file Excel
+            $fileName = "Data Export Gejala Pasien.xlsx";
             header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             header("Content-Disposition: attachment; filename=\"$fileName\"");
             
