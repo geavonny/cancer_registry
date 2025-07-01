@@ -201,17 +201,17 @@ class ProfileController extends Controller
     {
             $profile = Profile::where('no_rekam_medis',$no_rekam_medis)->first();
                 $profile->delete();
-            // $histori = Histori::where('no_rekam_medis',$no_rekam_medis)->first();
-            //     $histori->delete();
-            // $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->first();
-            //     $diagnosis->delete();
-            // $rujukan = Rujukan::where('no_rekam_medis',$no_rekam_medis)->first();
-            //     $rujukan->delete();
-            // $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)->first();
-            //     $rekam->delete();    
+            $histori = Histori::where('no_rekam_medis',$no_rekam_medis)->first();
+                $histori->delete();
+            $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->first();
+                $diagnosis->delete();
+            $rujukan = Rujukan::where('no_rekam_medis',$no_rekam_medis)->first();
+                $rujukan->delete();
+            $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)->first();
+                $rekam->delete();    
 
-            // if ($profile && $histori && $rujukan && $rekam && $diagnosis) 
-            if ($profile){
+            if ($profile && $histori && $rujukan && $rekam && $diagnosis) {
+            // if ($profile){
                 return response()->json([
                     'success' => true,
                     'message' => 'Profile pasien berhasil dihapus!',

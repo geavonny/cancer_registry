@@ -147,7 +147,7 @@ class RujukanController extends Controller
     //fungsi untuk menghapus data rujukan pasien berdasarkan no rekam medis pasien
     public function destroy($no_rekam_medis)
     {
-            $rujukan = Rujukan::where($no_rekam_medis)->first();
+            $rujukan = Rujukan::where('no_rekam_medis',$no_rekam_medis)->first();
             $rujukan->delete();
 
             if ($rujukan) {

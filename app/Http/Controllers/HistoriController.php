@@ -175,7 +175,7 @@ class HistoriController extends Controller
     //fungsi untuk menghapus data histori pasien berdasarkan id pasien
     public function destroy($no_rekam_medis)
     {
-            $histori = Histori::where($no_rekam_medis)->first();
+            $histori = Histori::where('no_rekam_medis',$no_rekam_medis)->first();
             $histori->delete();
 
             if ($histori) {

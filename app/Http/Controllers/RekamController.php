@@ -230,7 +230,7 @@ class RekamController extends Controller
     //fungsi untuk menghapus data rekam medis pasien berdasarkan no rekam medis pasien
     public function destroy($no_rekam_medis)
     {
-            $rekam = Rekam::where($no_rekam_medis)->first();
+            $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)->first();
             $rekam->delete();
 
             if ($rekam) {
