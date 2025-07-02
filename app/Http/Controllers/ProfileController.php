@@ -200,8 +200,9 @@ class ProfileController extends Controller
     public function destroy($no_rekam_medis)
     {
             $profile = Profile::where('no_rekam_medis',$no_rekam_medis)->first();
-                if($profile){
-                    $profile->delete();
+            $profile->delete();   
+            if($profile){
+                    
                     return response()->json([
                     'success' => true,
                     'message' => 'Profile pasien berhasil dihapus!',
