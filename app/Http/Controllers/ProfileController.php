@@ -209,7 +209,6 @@ class ProfileController extends Controller
                
             $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)->delete();
       
-               
 
             if ($profile || $histori || $rujukan || $rekam || $diagnosis) {
             // if ($profile){
