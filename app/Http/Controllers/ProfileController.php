@@ -199,43 +199,43 @@ class ProfileController extends Controller
     //fungsi untuk menghapus seluruh data pasien berdasarkan no rekam medis
     public function destroy($no_rekam_medis)
     {
-            $profile = Profile::where('no_rekam_medis',$no_rekam_medis)->first();
+            $profile = Profile::where('no_rekam_medis',$no_rekam_medis)->delete();
                 if($profile){
-                    $profile->delete();
+                    // $profile->delete();
                     return response()->json([
                     'success' => true,
                     'message' => 'Profile pasien berhasil dihapus!',
                 ], 200);
                 }    
-            $histori = Histori::where('no_rekam_medis',$no_rekam_medis)->first();
+            $histori = Histori::where('no_rekam_medis',$no_rekam_medis)->delete();
                 if($histori){
-                    $histori->delete();
+                    // $histori->delete();
                     return response()->json([
                     'success' => true,
                     'message' => 'Histori pasien berhasil dihapus!',
                 ], 200);
                 }                
-            $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->first();
+            $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->delete();
                 if($diagnosis){
-                    $diagnosis->delete();
+                    // $diagnosis->delete();
                     return response()->json([
                     'success' => true,
                     'message' => 'Diagnosis pasien berhasil dihapus!',
                 ], 200);       
                 }                 
             
-            $rujukan = Rujukan::where('no_rekam_medis',$no_rekam_medis)->first();
+            $rujukan = Rujukan::where('no_rekam_medis',$no_rekam_medis)->delete();
                 if($$rujukan){
-                    $rujukan->delete();
+                    // $rujukan->delete();
                     return response()->json([
                     'success' => true,
                     'message' => 'Rujukan pasien berhasil dihapus!',
                 ], 200);        
                 }             
                 
-            $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)->first();
+            $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)->delete();
                 if($$rekam){
-                    $rekam->delete();
+                    // $rekam->delete();
                     return response()->json([
                     'success' => true,
                     'message' => 'Rekam Medis pasien berhasil dihapus!',
