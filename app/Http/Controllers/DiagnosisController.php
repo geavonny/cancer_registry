@@ -161,7 +161,7 @@ class DiagnosisController extends Controller
     //fungsi untuk menghapus data diagnosis pasien
     public function destroy($no_rekam_medis) 
     {
-            $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->first();
+            $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->get();
             $diagnosis->delete();
 
             if ($diagnosis) {
