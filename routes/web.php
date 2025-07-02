@@ -22,71 +22,71 @@ $router->get('/Patient', 'ProfileController@index'); //menampilkan keseluruhan d
 $router->post('/Patient/store', 'ProfileController@store'); //menginput data pasien baru
 $router->get('/Patient/{no_rekam_medis}', 'ProfileController@show'); //mencari data pasien berdasarkan no rekam medis, no registrasi, id
 $router->put('/Patient/update/{id}', 'ProfileController@update'); // update data pasien berdasarkan id pasien
-$router->delete('/Patient/delete/{no_rekam_medis}', 'ProfileController@destroy'); //delete data pasien secara keseluruhan berdasarkan no rekam medis pasien
+$router->get('/Patient/delete/{no_rekam_medis}', 'ProfileController@destroy'); //delete data pasien secara keseluruhan berdasarkan no rekam medis pasien
 
 //ENDPOINT UNTUK TABEL histori_pasien PADA DATABASE cancer_registry
 $router->get('/DiagnosticReport', 'HistoriController@index'); //menampilkan keseluruhan data pada tabel histori pasien
 $router->post('/DiagnosticReport/store', 'HistoriController@store'); //menginput data baru pada tabel histori pasien
 $router->get('/DiagnosticReport/{no_rekam_medis}', 'HistoriController@show'); //mencari data pasien berdasarkan no rekam medis dan id
 $router->put('/DiagnosticReport/update/{id}', 'HistoriController@update'); // update data pasien berdasarkan id pasien
-$router->delete('/DiagnosticReport/delete/{no_rekam_medis}', 'HistoriController@destroy'); //delete histori data pasien berdasarkan no rekam medis pasien
+$router->get('/DiagnosticReport/delete/{no_rekam_medis}', 'HistoriController@destroy'); //delete histori data pasien berdasarkan no rekam medis pasien
 
 //ENDPOINT UNTUK TABEL diagnosis PADA DATABASE cancer_registry
 $router->get('/Condition', 'DiagnosisController@index'); //menampilkan keseluruhan data pada tabel diagnosis pasien
 $router->post('/Condition/store', 'DiagnosisController@store');//menginput data baru pada tabel diagnosis pasien
 $router->get('/Condition/{no_rekam_medis}', 'DiagnosisController@show');//mencari data pasien berdasarkan no rekam medis dan id
 $router->put('/Condition/update/{id}', 'DiagnosisController@update');// update data pasien berdasarkan id pasien
-// $router->delete('/Condition/delete/{no_rekam_medis}', 'DiagnosisController@destroy');//delete diagnosis data pasien berdasarkan no rekam medis pasien
-$router->get('/Condition/delete/{no_rekam_medis}', 'DiagnosisController@destroy');
+$router->get('/Condition/delete/{no_rekam_medis}', 'DiagnosisController@destroy');//delete diagnosis data pasien berdasarkan no rekam medis pasien
+
 
 //ENDPOINT UNTUK TABEL rujukan PADA DATABASE cancer_registry
 $router->get('/Referral', 'RujukanController@index'); //menampilkan keseluruhan data pada tabel rujukan pasien
 $router->post('/Referral/store', 'RujukanController@store');//menginput data baru pada tabel rujukan pasien
 $router->get('/Referral/{no_rekam_medis}', 'RujukanController@show');//mencari data pasien berdasarkan no rekam medis dan id
 $router->put('/Referral/update/{id}', 'RujukanController@update');// update data pasien berdasarkan id pasien
-$router->delete('/Referral/delete/{no_rekam_medis}', 'RujukanController@destroy');//delete rujukan data pasien berdasarkan no rekam medis pasien
+$router->get('/Referral/delete/{no_rekam_medis}', 'RujukanController@destroy');//delete rujukan data pasien berdasarkan no rekam medis pasien
 
 //ENDPOINT UNTUK TABEL rekam_medis PADA DATABASE cancer_registry
 $router->get('/Observation', 'RekamController@index'); //menampilkan keseluruhan data pada tabel rekam medis pasien
 $router->post('/Observation/store', 'RekamController@store');//menginput data baru pada tabel rekam medis pasien
 $router->get('/Observation/{no_rekam_medis}', 'RekamController@show');//mencari data pasien berdasarkan no rekam medis dan id
 $router->put('/Observation/update/{id}', 'RekamController@update');// update data pasien berdasarkan id pasien
-$router->delete('/Observation/delete/{no_rekam_medis}', 'RekamController@destroy');//delete rekam medis data pasien berdasarkan no rekam medis pasien
+$router->get('/Observation/delete/{no_rekam_medis}', 'RekamController@destroy');//delete rekam medis data pasien berdasarkan no rekam medis pasien
 
 //ENDPOINT UNTUK TABEL user PADA DATABASE cancer_registry
 $router->get('/User', 'PenggunaController@index');//menampilkan keseluruhan data pada tabel user
 $router->post('/User/store', 'PenggunaController@store');//menginput data baru pada tabel user
 $router->get('/User/{id}', 'PenggunaController@show');//mencari data user berdasarkan id
 $router->put('/User/update/{id}', 'PenggunaController@update');// update data user berdasarkan id user
-$router->delete('/User/delete/{id}', 'PenggunaController@destroy');//delete data user berdasarkan id user
+$router->get('/User/delete/{id}', 'PenggunaController@destroy');//delete data user berdasarkan id user
 
 //ENDPOINT UNTUK TABEL content PADA DATABASE cancer_registry
 $router->get('/Content', 'KontenController@index');//menampilkan keseluruhan data pada tabel content
 $router->post('/Content/store', 'KontenController@store');//menginput data baru pada tabel content
 $router->get('/Content/{judul}', 'KontenController@show');//mencari data content berdasarkan id content
 $router->put('/Content/update/{id}', 'KontenController@update');// update data content berdasarkan id content
-$router->delete('/Content/delete/{id}', 'KontenController@destroy');//delete data content berdasarkan id content
+$router->get('/Content/delete/{id}', 'KontenController@destroy');//delete data content berdasarkan id content
 
 //ENDPOINT UNTUK TABEL faq PADA DATABASE cancer_registry
 $router->get('/FAQ', 'FaqController@index');//menampilkan keseluruhan data pada tabel FAQ
 $router->post('/FAQ/store', 'FaqController@store');//menginput data baru pada tabel FAQ
 $router->get('/FAQ/{id}', 'FaqController@show');//mencari data FAQ berdasarkan id FAQ
 $router->put('/FAQ/update/{id}', 'FaqController@update');// update data FAQ berdasarkan id FAQ
-$router->delete('/FAQ/delete/{id}', 'FaqController@destroy');//delete data FAQ berdasarkan id FAQ
+$router->get('/FAQ/delete/{id}', 'FaqController@destroy');//delete data FAQ berdasarkan id FAQ
 
 //ENDPOINT UNTUK TABEL gejala PADA DATABASE cancer_registry
 $router->get('/Symptom', 'GejalaController@index');//menampilkan keseluruhan data pada tabel gejala pasien
 $router->post('/Symptom/store', 'GejalaController@store');//menginput data baru pada tabel gejala pasien
 $router->get('/Symptom/{no_rekam_medis}', 'GejalaController@show');//mencari data gejala pasien berdasarkan no rekam medis dan id pasien
 $router->put('/Symptom/update/{id}', 'GejalaController@update');// update data gejala pasien berdasarkan id pasien
-$router->delete('/Symptom/delete/{no_rekam_medis}', 'GejalaController@destroy');//delete data gejala pasien berdasarkan no rekam medis pasien
+$router->get('/Symptom/delete/{no_rekam_medis}', 'GejalaController@destroy');//delete data gejala pasien berdasarkan no rekam medis pasien
 
 //ENDPOINT UNTUK TABEL jadwal PADA DATABASE cancer_registry
 $router->get('/Appointment', 'JadwalController@index');//menampilkan keseluruhan data pada tabel jadwal check-up
 $router->post('/Appointment/store', 'JadwalController@store');//menginput data baru pada tabel jadwal check-up
 $router->get('/Appointment/{no_rekam_medis}', 'JadwalController@show');//mencari data jadwal check-up pasien berdasarkan no rekam medis dan id pasien
 $router->put('/Appointment/update/{id}', 'JadwalController@update');// update data jadwal check-up pasien berdasarkan id pasien
-$router->delete('/Appointment/delete/{no_rekam_medis}', 'JadwalController@destroy');//delete data jadwal check-up pasien berdasarkan no rekam medis pasien
+$router->get('/Appointment/delete/{no_rekam_medis}', 'JadwalController@destroy');//delete data jadwal check-up pasien berdasarkan no rekam medis pasien
 
 //ENDPOINT NOTIFIKASI CHECKUP
 $router->get('/CommunicationRequest', 'NotifikasiController@notifikasi'); //menampilkan reminder checkup pasien
