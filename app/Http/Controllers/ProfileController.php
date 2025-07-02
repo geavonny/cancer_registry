@@ -201,14 +201,26 @@ class ProfileController extends Controller
     {
             $profile = Profile::where('no_rekam_medis',$no_rekam_medis)->first();
                 $profile->delete();
+            
             $histori = Histori::where('no_rekam_medis',$no_rekam_medis)->first();
-                $histori->delete();
+                if($histori){
+                    $histori->delete();
+                }                
             $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->first();
-                $diagnosis->delete();
+                if($diagnosis){
+                    $diagnosis->delete();        
+                }                 
+            
             $rujukan = Rujukan::where('no_rekam_medis',$no_rekam_medis)->first();
-                $rujukan->delete();
+                if($$rujukan){
+                    $rujukan->delete();        
+                }             
+                
             $rekam = Rekam::where('no_rekam_medis',$no_rekam_medis)->first();
-                $rekam->delete();    
+                if($$rekam){
+                    $rekam->delete(); 
+                }         
+               
 
             if ($profile && $histori && $rujukan && $rekam && $diagnosis) {
             // if ($profile){
