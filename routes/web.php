@@ -36,7 +36,8 @@ $router->get('/Condition', 'DiagnosisController@index'); //menampilkan keseluruh
 $router->post('/Condition/store', 'DiagnosisController@store');//menginput data baru pada tabel diagnosis pasien
 $router->get('/Condition/{no_rekam_medis}', 'DiagnosisController@show');//mencari data pasien berdasarkan no rekam medis dan id
 $router->put('/Condition/update/{id}', 'DiagnosisController@update');// update data pasien berdasarkan id pasien
-$router->delete('/Condition/delete/{no_rekam_medis}', 'DiagnosisController@destroy');//delete diagnosis data pasien berdasarkan no rekam medis pasien
+// $router->delete('/Condition/delete/{no_rekam_medis}', 'DiagnosisController@destroy');//delete diagnosis data pasien berdasarkan no rekam medis pasien
+$router->get('/Condition/delete/{no_rekam_medis}', 'DiagnosisController@destroy');
 
 //ENDPOINT UNTUK TABEL rujukan PADA DATABASE cancer_registry
 $router->get('/Referral', 'RujukanController@index'); //menampilkan keseluruhan data pada tabel rujukan pasien
