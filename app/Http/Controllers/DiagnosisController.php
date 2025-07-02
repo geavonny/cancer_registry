@@ -159,16 +159,40 @@ class DiagnosisController extends Controller
     }
 
     //fungsi untuk menghapus data diagnosis pasien
-    public function destroy($no_rekam_medis) 
-    {
-            $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->delete();
-            // $diagnosis->delete();
+    // public function destroy($no_rekam_medis) 
+    // {
+    //         $diagnosis = Diagnosis::where('no_rekam_medis',$no_rekam_medis)->delete();
+    //         // $diagnosis->delete();
 
-            if ($diagnosis) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Diagnosis pasien berhasil dihapus!',
-                ], 200);
-            }        
+    //         if ($diagnosis) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'message' => 'Diagnosis pasien berhasil dihapus!',
+    //             ], 200);
+    //         }        
+    // }
+    public function destroy($no_rekam_medis)
+{
+    // Cari data diagnosis berdasarkan no_rekam_medis
+    $diagnosisList = Diagnosis::where('no_rekam_medis', $no_rekam_medis)->get();
+
+    // Jika tidak ada data ditemukan
+    if ($diagnosisList->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Data diagnosis tidak ditemukan.',
+        ], 404);
     }
+
+    // Hapus setiap entri diagnosis yang ditemukan
+    foreach ($diagnosisList as $diagnosis) {
+        $diagnosis->delete();
+    }
+
+    // Respon sukses
+    return response()->json([
+        'success' => true,
+        'message' => 'Semua data diagnosis dengan no_rekam_medis tersebut berhasil dihapus.',
+    ], 200);
+}
 }
