@@ -32,11 +32,11 @@ class RujukanImport implements ToModel, WithHeadingRow
 
         // If the record doesn't exist, create a new record
         return new ImportRujukan([
-           'nama_lengkap'   => $row['nama_lengkap'],
-           'no_registrasi'    => $row['no_registrasi'], 
-           'no_rekam_medis' => $row['no_rekam_medis'],
-           'ppk' => $row['ppk'],
-           'tgl_ppk' => $row['tgl_ppk'],
+           'nama_lengkap'   => $row['nama_lengkap'] ?? null,
+           'no_registrasi'    => $row['no_registrasi'] ?? null, 
+           'no_rekam_medis' => $row['no_rekam_medis'] ?? null,
+           'ppk' => $row['ppk'] ?? null,
+           'tgl_ppk' => $row['tgl_ppk'] ?? null,
         ]);
     }
 }

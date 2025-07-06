@@ -17,7 +17,15 @@ class DiagnosisImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         // dd($row);
-        
+         // Jika row kosong, abaikan
+        if (empty($row)) {
+            return null;
+        }
+
+        // Pastikan kolom yang diperlukan tersedia
+        if (!isset($row['nama_lengkap'])) {
+            return null; // Abaikan jika tidak lengkap
+        }
         // Check if a record with the same 'nik' already exists
         $existingRecord = ImportDiagnosis::where('nama_lengkap', $row['nama_lengkap'])->first();
 
@@ -32,17 +40,17 @@ class DiagnosisImport implements ToModel, WithHeadingRow
 
         // If the record doesn't exist, create a new record
         return new ImportDiagnosis([
-           'nama_lengkap'   => $row['nama_lengkap'],
-           'no_registrasi'    => $row['no_registrasi'], 
-           'no_rekam_medis' => $row['no_rekam_medis'],
-           'kode_subgroup' => $row['kode_subgroup'],
-           'subgroup' => $row['subgroup'],
-           'kode_morfologi' => $row['kode_morfologi'],
-           'morfologi' => $row['morfologi'],
-           'kode_topografi' => $row['kode_topografi'],
-           'topografi' => $row['topografi'],
-           'literalitas' => $row['literalitas'],
-           'tgl_pertama_konsultasi' => $row['tgl_pertama_konsultasi'],
+           'nama_lengkap'           => $row['nama_lengkap'] ?? null,
+           'no_registrasi'          => $row['no_registrasi'] ?? null, 
+           'no_rekam_medis'         => $row['no_rekam_medis'] ?? null,
+           'kode_subgroup'          => $row['kode_subgroup'] ?? null,
+           'subgroup'               => $row['subgroup'] ?? null,
+           'kode_morfologi'         => $row['kode_morfologi'] ?? null,
+           'morfologi'              => $row['morfologi'] ?? null,
+           'kode_topografi'         => $row['kode_topografi'] ?? null,
+           'topografi'              => $row['topografi'] ?? null,
+           'literalitas'            => $row['literalitas'] ?? null,
+           'tgl_pertama_konsultasi' => $row['tgl_pertama_konsultasi'] ?? null,
         ]);
     }
 }

@@ -17,7 +17,15 @@ class HistoriImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         // dd($row);
-        
+         // Jika row kosong, abaikan
+        if (empty($row)) {
+            return null;
+        }
+
+        // Pastikan kolom yang diperlukan tersedia
+        if (!isset($row['no_registrasi'])) {
+            return null; // Abaikan jika tidak lengkap
+        }
         // Check if a record with the same 'nik' already exists
         $existingRecord = ImportHistori::where('no_registrasi', $row['no_registrasi'])->first();
 
@@ -38,22 +46,22 @@ class HistoriImport implements ToModel, WithHeadingRow
 
         // If the record doesn't exist, create a new record
         return new ImportHistori([
-           'nama_lengkap'   => $row['nama_lengkap'],
-           'no_registrasi'    => $row['no_registrasi'], 
-           'no_rekam_medis' => $row['no_rekam_medis'],
-           'dasar_diagnosis' => $row['dasar_diagnosis'],
-           'bb_lahir' => $row['bb_lahir'],
-           'imunisasi' => $row['imunisasi'],
-           'asi_eksklusif' => $row['asi_eksklusif'],
-           'riwayat_keganasan_keluarga' => $row['riwayat_keganasan_keluarga'],
-           'ket_keganasan_keluarga' => $row['ket_keganasan_keluarga'],
-           'tata_laksana' => $row['tata_laksana'],
-           'staging_stadium' => $row['staging_stadium'],
-           'tgl_keluhan_pertama' => $row['tgl_keluhan_pertama'],
-           'tgl_diagnosis' => $row['tgl_diagnosis'],
-           'tgl_pertama_terapi' => $row['tgl_pertama_terapi'],
-           'status_validasi' => $row['status_validasi'],
-           'nama_unit' => $row['nama_unit'],
+           'nama_lengkap'               => $row['nama_lengkap'] ?? null,
+           'no_registrasi'              => $row['no_registrasi'] ?? null, 
+           'no_rekam_medis'             => $row['no_rekam_medis'] ?? null,
+           'dasar_diagnosis'            => $row['dasar_diagnosis'] ?? null,
+           'bb_lahir'                   => $row['bb_lahir'] ?? null,
+           'imunisasi'                  => $row['imunisasi'] ?? null,
+           'asi_eksklusif'              => $row['asi_eksklusif'] ?? null,
+           'riwayat_keganasan_keluarga' => $row['riwayat_keganasan_keluarga'] ?? null,
+           'ket_keganasan_keluarga'     => $row['ket_keganasan_keluarga'] ?? null,
+           'tata_laksana'               => $row['tata_laksana'] ?? null,
+           'staging_stadium'            => $row['staging_stadium'] ?? null,
+           'tgl_keluhan_pertama'        => $row['tgl_keluhan_pertama'] ?? null,
+           'tgl_diagnosis'              => $row['tgl_diagnosis'] ?? null,
+           'tgl_pertama_terapi'         => $row['tgl_pertama_terapi'] ?? null,
+           'status_validasi'            => $row['status_validasi'] ?? null,
+           'nama_unit'                  => $row['nama_unit'] ?? null,
         ]);
     }
 }
