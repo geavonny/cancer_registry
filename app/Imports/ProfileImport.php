@@ -16,43 +16,47 @@ class ProfileImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // dd($row);
-        
-        // Check if a record with the same 'nik' already exists
-        $existingRecord = ImportProfile::where('no_registrasi', $row['no_registrasi'])
-                                        ->Where('nik', $row['nik'])
-                                        ->first();
+        // Jika row kosong, abaikan
+        if (empty($row)) {
+            return null;
+        }
 
-        // If the record already exists, return null to skip it
+        // Pastikan kolom yang diperlukan tersedia
+        if (!isset($row['no_registrasi']) || !isset($row['nik'])) {
+            return null; // Abaikan jika tidak lengkap
+        }
+
+        // Cek apakah data dengan NIK & No Registrasi yang sama sudah ada
+        $existingRecord = ImportProfile::where('no_registrasi', $row['no_registrasi'])
+                                       ->where('nik', $row['nik'])
+                                       ->first();
+
+        // Jika sudah ada, abaikan
         if ($existingRecord) {
             return null;
         }
-        
-        // Convert the Excel date (numeric) to a MySQL-compatible date format
-        // $tgllahir = Date::excelToDateTimeObject($row['tanggal_lahir']);
-        // $formattgllahir = $tgllahir->format('Y-m-d');
 
-        // If the record doesn't exist, create a new record
+        // Insert data baru
         return new ImportProfile([
-           'nama_lengkap'   => $row['nama_lengkap'],
-           'no_registrasi'    => $row['no_registrasi'], 
-           'no_rekam_medis' => $row['no_rekam_medis'],
-           'nik' => $row['nik'],
-           'tempat_lahir' => $row['tempat_lahir'],
-           'tanggal_lahir' => $row['tanggal_lahir'],
-           'jenis_kelamin' => $row['jenis_kelamin'],
-           'usia_terdiagnosis' => $row['usia_terdiagnosis'],
-           'alamat' => $row['alamat'],
-           'propinsi' => $row['propinsi'],
-           'kabupaten' => $row['kabupaten'],
-           'kecamatan' => $row['kecamatan'],
-           'desa' => $row['desa'],
-           'no_hp' => $row['no_hp'],
-           'no_hp2' => $row['no_hp2'],
-           'no_bpjs' => $row['no_bpjs'],
-           'bb' => $row['bb'],
-           'tb' => $row['tb'],
-           'kesimpulan' => $row['kesimpulan'],
+            'nama_lengkap'       => $row['nama_lengkap'] ?? null,
+            'no_registrasi'      => $row['no_registrasi'] ?? null,
+            'no_rekam_medis'     => $row['no_rekam_medis'] ?? null,
+            'nik'                => $row['nik'] ?? null,
+            'tempat_lahir'       => $row['tempat_lahir'] ?? null,
+            'tanggal_lahir'      => $row['tanggal_lahir'] ?? null,
+            'jenis_kelamin'      => $row['jenis_kelamin'] ?? null,
+            'usia_terdiagnosis'  => $row['usia_terdiagnosis'] ?? null,
+            'alamat'             => $row['alamat'] ?? null,
+            'propinsi'           => $row['propinsi'] ?? null,
+            'kabupaten'          => $row['kabupaten'] ?? null,
+            'kecamatan'          => $row['kecamatan'] ?? null,
+            'desa'               => $row['desa'] ?? null,
+            'no_hp'              => $row['no_hp'] ?? null,
+            'no_hp2'             => $row['no_hp2'] ?? null,
+            'no_bpjs'            => $row['no_bpjs'] ?? null,
+            'bb'                 => $row['bb'] ?? null,
+            'tb'                 => $row['tb'] ?? null,
+            'kesimpulan'         => $row['kesimpulan'] ?? null,
         ]);
     }
 }
