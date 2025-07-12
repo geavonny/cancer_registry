@@ -111,6 +111,7 @@ class ProfileController extends Controller
     {
             $profile = Profile::where('no_rekam_medis',$no_rekam_medis)
                             ->orWhere('no_registrasi',$no_rekam_medis)
+                            ->orWhere('nik',$no_rekam_medis)
                             ->orWhereRaw('LOWER(nama_lengkap) LIKE ?', [strtolower('%'.$no_rekam_medis.'%')])
                             ->get();
             // $profile = $no_registrasi;
