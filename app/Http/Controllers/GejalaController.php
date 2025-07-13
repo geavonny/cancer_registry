@@ -140,11 +140,11 @@ class GejalaController extends Controller
     }
 
     //fungsi untuk menghapus data gejala pasien berdasarkan no rekam medis
-    public function destroy($no_rekam_medis) 
+    public function destroy($no_rekam_medis=null) 
     {
             $gejala = Gejala::where('no_rekam_medis',$no_rekam_medis)
-                            ->orWhere('id',$no_rekam_medis)
-                            ->get();
+                                ->orWhere('id',$no_rekam_medis)
+                                ->first();
             $gejala->delete();   
 
             if ($gejala) {
