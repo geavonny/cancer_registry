@@ -28,6 +28,7 @@ class GejalaController extends Controller
                 'no_registrasi' => 'required',
                 'no_rekam_medis' => 'required',
                 'gejala' => 'required',
+                'tanggal_gejala' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -45,6 +46,7 @@ class GejalaController extends Controller
                     'no_registrasi' => $request->input('no_registrasi'),
                     'no_rekam_medis' => $request->input('no_rekam_medis'),
                     'gejala'   => $request->input('gejala'),
+                    'tanggal_gejala' => $request->input('tanggal_gejala'),
                 ]);
 
                 if ($gejala) {
@@ -93,6 +95,7 @@ class GejalaController extends Controller
                 'no_registrasi' => 'nullable',
                 'no_rekam_medis' => 'nullable',
                 'gejala' => 'nullable',
+                'tanggal_gejala' => 'nullable',
             ]);
 
             if ($validator->fails()) {
