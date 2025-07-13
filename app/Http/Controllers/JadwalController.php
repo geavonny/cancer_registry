@@ -155,10 +155,12 @@ class JadwalController extends Controller
     }
 
     //fungsi untuk menghapus data jadwal checkup berdasarkan id jadwal checkup pasien
-    public function destroy($no_rekam_medis)
+    public function destroy($no_rekam_medis=null)
     {
-            $jadwal = Jadwal::where('no_rekam_medis',$no_rekam_medis)->first();
-                $jadwal->delete();   
+            $jadwal = Jadwal::where('no_rekam_medis',$no_rekam_medis)
+                                ->orWhere('id',$no_rekam_medis)
+                                ->first();
+            $jadwal->delete();   
 
             if ($jadwal) {
                 return response()->json([
