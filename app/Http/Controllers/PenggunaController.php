@@ -25,6 +25,7 @@ class PenggunaController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
+                'nama_lengkap' => 'required',
                 'username' => 'required',
                 'password' => 'required',
                 'email' => 'required',
@@ -43,10 +44,12 @@ class PenggunaController extends Controller
             } else {
 
                 $pengguna = Pengguna::create([
+                    'nama_lengkap' => $request->input('nama_lengkap'),
                     'username' => $request->input('username'),
                     'password'   => Hash::make($request->input('password')),
                     'email' => $request->input('email'),
                     'nik'   => $request->input('nik'),
+                    'nip'   => $request->input('nip'),
                     'level' => $request->input('level'),
                 ]);
 
@@ -92,10 +95,12 @@ class PenggunaController extends Controller
     {
             // Validasi input
             $validator = Validator::make($request->all(), [
+                'nama_lengkap' => 'nullable',
                 'username' => 'nullable',
                 'password' => 'nullable',
                 'email' => 'nullable',
                 'nik'   => 'nullable',
+                'nip'   => 'nullable',
                 'level' => 'nullable',
             ]);
 
