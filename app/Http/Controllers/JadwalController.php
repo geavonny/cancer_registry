@@ -31,6 +31,7 @@ class JadwalController extends Controller
                 'no_rekam_medis' => 'required',
                 'nama_dokter' => 'required',
                 'tanggal' => 'required',
+                'tanggal_akhir' => 'required',
                 'status' => 'required',
             ]);
 
@@ -50,6 +51,7 @@ class JadwalController extends Controller
                     'no_rekam_medis' => $request->input('no_rekam_medis'),
                     'nama_dokter'   => $request->input('nama_dokter'),
                     'tanggal'   => $request->input('tanggal'),
+                    'tanggal_akhir'   => $request->input('tanggal_akhir'),
                     'status'   => $request->input('status'),
                     'keterangan'=> $request->input('keterangan'),
                     'kehadiran'=> $request->input('kehadiran'),
@@ -109,6 +111,7 @@ class JadwalController extends Controller
                 'no_rekam_medis' => 'nullable',
                 'nama_dokter' => 'nullable',
                 'tanggal' => 'nullable',
+                'tanggal_akhir' => 'nullable',
                 'status' => 'nullable',
                 'keterangan' => 'nullable',
                 'kehadiran' => 'nullable',
