@@ -15,7 +15,7 @@ class Jadwal extends Model
      * @var array
      */
     protected $fillable = [
-        'nama_lengkap','no_registrasi','no_rekam_medis','nama_dokter','tanggal','tanggal_akhir','status','keterangan','kehadiran','abandon'
+        'nama_lengkap','no_registrasi','no_rekam_medis','nama_dokter','tanggal','tanggal_akhir','status','keterangan','kehadiran','abandon', 'catatan'
 
     ];
     /**

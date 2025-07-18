@@ -33,7 +33,10 @@ class LoginController extends Controller
 
             } else {
 
-                $pengguna = Pengguna::where('email',$request->input('email'))->first();
+                $pengguna = Pengguna::where('email',$request->input('email'))
+                                        ->orWhere('nik',$request->input('nik'))
+                                        ->orWhere('username',$request->input('username'))
+                                        ->first();
                 // dd(Hash::check($request->input('password'),$pengguna->password));
                 // dd($pengguna);
                 if($pengguna && Hash::check($request->input('password'),$pengguna->password)){

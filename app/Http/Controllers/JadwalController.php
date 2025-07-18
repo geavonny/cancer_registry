@@ -56,6 +56,7 @@ class JadwalController extends Controller
                     'keterangan'=> $request->input('keterangan'),
                     'kehadiran'=> $request->input('kehadiran'),
                     'abandon'=> $request->input('abandon'),
+                    'catatan'=> $request->input('catatan'),
                 ]);
 
                 if ($jadwal) {
@@ -116,6 +117,7 @@ class JadwalController extends Controller
                 'keterangan' => 'nullable',
                 'kehadiran' => 'nullable',
                 'abandon' => 'nullable',
+                'catatan' => 'nullable',
             ]);
 
             if ($validator->fails()) {

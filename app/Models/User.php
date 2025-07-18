@@ -24,7 +24,7 @@ class Pengguna extends Model implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $fillable = [
-        'username', 'password','email','nik','level',
+        'nama_lengkap','username', 'password','email','nik','nip', 'level',
     ];
 
     /**
