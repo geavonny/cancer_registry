@@ -47,6 +47,8 @@ class GejalaController extends Controller
                     'no_rekam_medis' => $request->input('no_rekam_medis'),
                     'gejala'   => $request->input('gejala'),
                     'tanggal_gejala' => $request->input('tanggal_gejala'),
+                    'catatan_pasien' => $request->input('catatan_pasien'),
+                    'catatan_dokter' => $request->input('catatan_dokter'),
                 ]);
 
                 if ($gejala) {
@@ -96,6 +98,8 @@ class GejalaController extends Controller
                 'no_rekam_medis' => 'nullable',
                 'gejala' => 'nullable',
                 'tanggal_gejala' => 'nullable',
+                'catatan_pasien' => 'nullable',
+                'catatan_dokter' => 'nullable',
             ]);
 
             if ($validator->fails()) {

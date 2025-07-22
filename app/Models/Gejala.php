@@ -15,7 +15,7 @@ class Gejala extends Model
      * @var array
      */
     protected $fillable = [
-        'nama_lengkap','no_registrasi','no_rekam_medis','gejala','tanggal_gejala',
+        'nama_lengkap','no_registrasi','no_rekam_medis','gejala','tanggal_gejala', 'catatan_pasien', 'catatan_dokter'
 
     ];
 }
