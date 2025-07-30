@@ -26,13 +26,9 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
-                'nama_lengkap' => 'required',
-                'no_registrasi' => 'required',
                 'no_rekam_medis' => 'required',
-                'nama_dokter' => 'required',
                 'tanggal' => 'required',
                 'tanggal_akhir' => 'required',
-                'status' => 'required',
             ]);
 
             if ($validator->fails()) {
