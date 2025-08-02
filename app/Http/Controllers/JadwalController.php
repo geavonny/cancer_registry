@@ -37,7 +37,7 @@ class JadwalController extends Controller
                     'success' => false,
                     'message' => 'Semua kolom required wajib diisi!',
                     'data'   => $validator->errors()
-                ],401);
+                ],422);
 
             } else {
 
@@ -123,7 +123,7 @@ class JadwalController extends Controller
                     'success' => false,
                     'message' => 'Validasi gagal!',
                     'data'   => $validator->errors()
-                ], 401);
+                ], 422);
             }
 
             // Ambil data lama dari database

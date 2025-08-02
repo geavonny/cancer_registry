@@ -39,7 +39,7 @@ class RujukanController extends Controller
                     'success' => false,
                     'message' => 'Kolom required wajib diisi!',
                     'data'   => $validator->errors()
-                ],401);
+                ],422);
     
             } else {
     
@@ -107,7 +107,7 @@ class RujukanController extends Controller
                     'success' => false,
                     'message' => 'Validasi gagal!',
                     'data'   => $validator->errors()
-                ], 401);
+                ], 422);
             }
 
             // Ambil data lama dari database

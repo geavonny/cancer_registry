@@ -25,7 +25,7 @@ class ImportsController extends Controller
 
             // If validation fails, return a response with the errors
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first()], 400);
+                return response()->json(['error' => $validator->errors()->first()], 422);
             }
 
             // Check if the file is present in the request
@@ -56,7 +56,7 @@ class ImportsController extends Controller
 
             // If validation fails, return a response with the errors
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first()], 400);
+                return response()->json(['error' => $validator->errors()->first()], 422);
             }
 
             // Check if the file is present in the request
@@ -87,7 +87,7 @@ class ImportsController extends Controller
 
             // If validation fails, return a response with the errors
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first()], 400);
+                return response()->json(['error' => $validator->errors()->first()], 422);
             }
 
             // Check if the file is present in the request
@@ -118,7 +118,7 @@ class ImportsController extends Controller
 
             // If validation fails, return a response with the errors
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first()], 400);
+                return response()->json(['error' => $validator->errors()->first()], 422);
             }
 
             // Check if the file is present in the request
@@ -149,7 +149,7 @@ class ImportsController extends Controller
 
             // If validation fails, return a response with the errors
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first()], 400);
+                return response()->json(['error' => $validator->errors()->first()], 422);
             }
 
             // Check if the file is present in the request
