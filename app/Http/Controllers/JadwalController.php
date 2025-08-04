@@ -27,6 +27,7 @@ class JadwalController extends Controller
     {
             $validator = Validator::make($request->all(), [
                 'no_rekam_medis' => 'required',
+                'nama_dokter' => 'required',
                 'tanggal' => 'required',
                 'tanggal_akhir' => 'required',
             ]);
