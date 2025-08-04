@@ -85,11 +85,32 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        // $token = $request->header('Authorization');
+        // if($token){
+        //     Token::where('token', $token)->delete();
+        // } return response()->json([
+        //     'message'=>'Berhasil keluar',
+        // ]);      
         $token = $request->header('Authorization');
-        if($token){
-            Token::where('token', $token)->delete();
-        } return response()->json([
-            'message'=>'Berhasil keluar',
-        ]);        
+
+        if (!$token) {
+            return response()->json([
+                'message' => 'Token tidak ditemukan di header Authorization.',
+            ], 400);
+        }
+
+        $existingToken = Token::where('token', $token)->first();
+
+        if (!$existingToken) {
+            return response()->json([
+                'message' => 'Token tidak valid atau sudah logout sebelumnya.',
+            ], 401);
+        }
+
+        $existingToken->delete();
+
+        return response()->json([
+            'message' => 'Berhasil keluar',
+        ]);  
     }
 }
