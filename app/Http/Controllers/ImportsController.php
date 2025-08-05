@@ -16,86 +16,86 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class ImportsController extends Controller 
 {
     // IMPORT FILE DIAGNOSIS
-    // public function diagnosis(Request $request)
-    // {
-        
-    //         // Manual validation using Lumen's Validator
-    //         $validator = Validator::make($request->all(), [
-    //             'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
-    //         ]);
-
-    //         // If validation fails, return a response with the errors
-    //         if ($validator->fails()) {
-    //             return response()->json(['error' => $validator->errors()->first()], 422);
-    //         }
-
-    //         // Check if the file is present in the request
-    //         if ($request->hasFile('file')) {
-    //             // Get the file from the request
-    //             $file = $request->file('file');
-                
-    //             // Import the file directly
-    //             Excel::import(new DiagnosisImport, $file);
-
-    //             // Return a success message
-    //             return response()->json(['message' => 'Imported Successfully!'], 200);
-    //         }
-
-    //         // If no file is uploaded, return an error message
-    //         return response()->json(['error' => 'No file uploaded.'], 400);    
-        
-    // }
     public function diagnosis(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
+        
+            // Manual validation using Lumen's Validator
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|mimes:xlsx,xls,csv', // Only allow Excel or CSV files
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 422);
-        }
-
-        if (!$request->hasFile('file')) {
-            return response()->json(['error' => 'No file uploaded.'], 400);
-        }
-
-        try {
-            $file = $request->file('file');
-
-            // Validasi isi file sebelum import
-            $spreadsheet = IOFactory::load($file->getRealPath());
-            $sheet = $spreadsheet->getActiveSheet();
-            $rows = $sheet->toArray();
-
-            $validRowCount = 0;
-
-            foreach ($rows as $index => $row) {
-                if ($index === 0) continue; // skip header
-
-                // Validasi kolom 0 dan 1 wajib isi
-                if (
-                    isset($row[0]) && isset($row[1]) &&
-                    trim($row[0]) !== '' && trim($row[1]) !== ''
-                ) {
-                    $validRowCount++;
-                }
+            // If validation fails, return a response with the errors
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 422);
             }
 
-            if ($validRowCount === 0) {
-                return response()->json(['error' => 'File is empty or all rows incomplete.'], 422);
+            // Check if the file is present in the request
+            if ($request->hasFile('file')) {
+                // Get the file from the request
+                $file = $request->file('file');
+                
+                // Import the file directly
+                Excel::import(new DiagnosisImport, $file);
+
+                // Return a success message
+                return response()->json(['message' => 'Imported Successfully!'], 200);
             }
 
-            // Jalankan import TANPA manggil getRowCount
-            Excel::import(new DiagnosisImport, $file);
-
-            return response()->json([
-                'message' => 'Import completed successfully.',
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Import failed: ' . $e->getMessage()], 500);
-        }
+            // If no file is uploaded, return an error message
+            return response()->json(['error' => 'No file uploaded.'], 400);    
+        
     }
+    // public function diagnosis(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'file' => 'required|mimes:xlsx,xls,csv',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['error' => $validator->errors()->first()], 422);
+    //     }
+
+    //     if (!$request->hasFile('file')) {
+    //         return response()->json(['error' => 'No file uploaded.'], 400);
+    //     }
+
+    //     try {
+    //         $file = $request->file('file');
+
+    //         // Validasi isi file sebelum import
+    //         $spreadsheet = IOFactory::load($file->getRealPath());
+    //         $sheet = $spreadsheet->getActiveSheet();
+    //         $rows = $sheet->toArray();
+
+    //         $validRowCount = 0;
+
+    //         foreach ($rows as $index => $row) {
+    //             if ($index === 0) continue; // skip header
+
+    //             // Validasi kolom 0 dan 1 wajib isi
+    //             if (
+    //                 isset($row[0]) && isset($row[1]) &&
+    //                 trim($row[0]) !== '' && trim($row[1]) !== ''
+    //             ) {
+    //                 $validRowCount++;
+    //             }
+    //         }
+
+    //         if ($validRowCount === 0) {
+    //             return response()->json(['error' => 'File is empty or all rows incomplete.'], 422);
+    //         }
+
+    //         // Jalankan import TANPA manggil getRowCount
+    //         Excel::import(new DiagnosisImport, $file);
+
+    //         return response()->json([
+    //             'message' => 'Import completed successfully.',
+    //         ], 200);
+
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => 'Import failed: ' . $e->getMessage()], 500);
+    //     }
+    // }
 
     // IMPORT FILE PROFILE PASIEN
     public function profile(Request $request)
