@@ -62,37 +62,39 @@ class ImportsController extends Controller
         try {
             $file = $request->file('file');
 
-            // Gunakan PhpSpreadsheet untuk memeriksa isi file sebelum import
+            // Validasi isi file sebelum import
             $spreadsheet = IOFactory::load($file->getRealPath());
             $sheet = $spreadsheet->getActiveSheet();
             $rows = $sheet->toArray();
 
-            // Cek apakah hanya header atau tidak ada data sama sekali
-            if (count($rows) <= 1 || $this->isOnlyHeader($rows)) {
-                return response()->json(['error' => 'File is empty or contains no data.'], 422);
+            $validRowCount = 0;
+
+            foreach ($rows as $index => $row) {
+                if ($index === 0) continue; // skip header
+
+                // Validasi kolom 0 dan 1 wajib isi
+                if (
+                    isset($row[0]) && isset($row[1]) &&
+                    trim($row[0]) !== '' && trim($row[1]) !== ''
+                ) {
+                    $validRowCount++;
+                }
             }
 
-            // Lanjutkan proses import
-            Excel::import(new \App\Imports\DiagnosisImport, $file);
+            if ($validRowCount === 0) {
+                return response()->json(['error' => 'File is empty or all rows incomplete.'], 422);
+            }
 
-            return response()->json(['message' => 'Import completed successfully.'], 200);
+            // Jalankan import TANPA manggil getRowCount
+            Excel::import(new DiagnosisImport, $file);
+
+            return response()->json([
+                'message' => 'Import completed successfully.',
+            ], 200);
+
         } catch (\Exception $e) {
             return response()->json(['error' => 'Import failed: ' . $e->getMessage()], 500);
         }
-    }
-
-    // Fungsi bantu untuk cek apakah hanya header
-    private function isOnlyHeader(array $rows): bool
-    {
-        foreach ($rows as $index => $row) {
-            if ($index === 0) continue; // skip header
-            foreach ($row as $cell) {
-                if (!empty($cell)) {
-                    return false; // Ada data isi
-                }
-            }
-        }
-        return true; // Semua kosong setelah header
     }
 
     // IMPORT FILE PROFILE PASIEN
